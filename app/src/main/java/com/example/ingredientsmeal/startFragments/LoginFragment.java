@@ -98,9 +98,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.btnArrowBackLogin:
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_left);
+                fragment = new WelcomeFragment();
+                loadFragment(fragment);
                 break;
             case R.id.btnForgotPassword:
                 fragment = new ForgotPassword();

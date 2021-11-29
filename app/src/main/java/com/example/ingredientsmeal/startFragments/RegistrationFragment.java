@@ -102,9 +102,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.btnBackRegistration:
-                Intent intent = new Intent(getContext(), MenuListMeals.class);
-                startActivity(intent);
-                ((Activity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_left);
+                fragment = new WelcomeFragment();
+                loadFragment(fragment);
                 break;
             case R.id.btnRegistration:
                 regUser();
