@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Ingredients&amp;Meal</string>
+
+    <string name="title_aplication">Shopping&amp;Eating</string>
+    <string name="login_button">Zaloguj się</string>\
+    <string name="registration_button">Zarejestuj się</string>
+
+    <string name="msg_toast_error_again">Spróbuj ponownie</string>
+    <string name="msg_toast_error_reg">Użytkownik nie został zarejestrowany</string>
+    <string name="msg_toast_error_lg">Błąd podczas logowania, sprawdź wprowadzone dane</string>
+    <string name="msg_toast_error_forget">Operacja nie powiodła się sprawdzi wprowadzone dane i połączenie z internetem</string>
+    <string name="msg_toast_succ_forget">Sprawdzi swojego maila w celu zresetowania hasła</string>
+    <string name="msg_toast_succ_reg">Pomyślnie zarejestrowano użytkownika</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
