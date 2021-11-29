@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".startFragments.RegistrationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/risque"
+            android:text="Rejestracja"
+            android:textColor="#FFFFFF"
+            android:textSize="46sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegistration"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="125dp"
+            android:background="@drawable/btn_basic_custom_red"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/registration_button"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:translationZ="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="OnClick" />
+
+        <ImageView
+            android:id="@+id/RgImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/registration_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNumber" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutLg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:counterTextColor="@color/white"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:helperText="Wymagany*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleLogin"
+            app:passwordToggleTint="@color/white"
+            app:placeholderTextColor="@color/white"
+            app:prefixTextColor="@color/white"
+            app:startIconDrawable="@drawable/ic_login_person"
+            app:startIconTint="@color/white"
+            app:suffixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/LoginInputTextReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Login"
+                android:maxLength="13"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEm"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:counterTextColor="@color/white"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:helperText="Wymagany*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLg"
+            app:passwordToggleTint="@color/white"
+            app:placeholderTextColor="@color/white"
+            app:prefixTextColor="@color/white"
+            app:startIconDrawable="@drawable/ic_mail_person"
+            app:startIconTint="@color/white"
+            app:suffixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EmailInputTextReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPass"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:counterTextColor="@color/white"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/white"
+            app:helperText="Wymagany*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEm"
+            app:passwordToggleTint="@color/white"
+            app:placeholderTextColor="@color/white"
+            app:prefixTextColor="@color/white"
+            app:startIconDrawable="@drawable/ic_password_person"
+            app:startIconTint="@color/white"
+            app:suffixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/PasswordInputTextReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hasło"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutNumber"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="9"
+            app:counterTextColor="@color/white"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:helperText="Opcjonalne*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPass"
+            app:passwordToggleTint="@color/white"
+            app:placeholderTextColor="@color/white"
+            app:prefixText="+48"
+            app:prefixTextColor="@color/white"
+            app:startIconDrawable="@drawable/ic_phone_person"
+            app:startIconTint="@color/white"
+            app:suffixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/NumberInputTextReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Numer Telefonu"
+                android:inputType="phone"
+                android:maxLength="9"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBackRegistration"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_come_back_arrow"
+            android:foreground="?attr/selectableItemBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/titleLogin"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
