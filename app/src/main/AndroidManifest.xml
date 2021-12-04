@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IngredientsMeal">
         <activity
-            android:name=".menu.MenuListMeals"
+            android:name=".menu.MainMenu"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

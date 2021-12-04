@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomToastDialog;
-import com.example.ingredientsmeal.dialog.LoadingDialog;
+import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -114,17 +114,17 @@ public class ForgotPassword extends Fragment implements View.OnClickListener{
             return;
         }
 
-        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.startLoadingDialog();
+        final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
+        customLoadingDialog.startLoadingDialog();
 
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    loadingDialog.dismissDialog();
+                    customLoadingDialog.dismissDialog();
                     new CustomToastDialog(getActivity(), R.string.msg_toast_succ_forget, R.id.custom_toast_message, R.layout.toast_success).show();
                 } else {
-                    loadingDialog.dismissDialog();
+                    customLoadingDialog.dismissDialog();
                     new CustomToastDialog(getActivity(), R.string.msg_toast_error_forget, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }

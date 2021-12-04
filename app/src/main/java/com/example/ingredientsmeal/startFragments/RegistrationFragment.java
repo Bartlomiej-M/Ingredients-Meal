@@ -1,7 +1,5 @@
 package com.example.ingredientsmeal.startFragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +17,7 @@ import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomToastDialog;
-import com.example.ingredientsmeal.dialog.LoadingDialog;
-import com.example.ingredientsmeal.menu.MenuListMeals;
+import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.example.ingredientsmeal.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -144,8 +141,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
             return;
         }
 
-        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.startLoadingDialog();
+        final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
+        customLoadingDialog.startLoadingDialog();
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -159,19 +156,19 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                loadingDialog.dismissDialog();
+                                customLoadingDialog.dismissDialog();
                                 new CustomToastDialog(getContext(), R.string.msg_toast_succ_reg, R.id.custom_toast_message, R.layout.toast_success).show();
                                 Fragment fragment = null;
                                 fragment = new LoginFragment();
                                 loadFragment(fragment);
                             } else {
-                                loadingDialog.dismissDialog();
+                                customLoadingDialog.dismissDialog();
                                 new CustomToastDialog(getContext(), R.string.msg_toast_error_again, R.id.custom_toast_message, R.layout.toast_warning).show();
                             }
                         }
                     });
                 } else {
-                    loadingDialog.dismissDialog();
+                    customLoadingDialog.dismissDialog();
                     new CustomToastDialog(getContext(), R.string.msg_toast_error_reg, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }

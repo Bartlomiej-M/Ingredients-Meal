@@ -13,5 +13,8 @@
     <string name="msg_toast_succ_reg">Pomyślnie zarejestrowano użytkownika</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="msg_question_logout">Czy napewno chcesz się wylogować ?</string>
+    <string name="msg_correct_logout">Poprawnie wylogowano</string>
+    <string name="alert_yes">Tak</string>
+    <string name="alert_no">Nie</string>
 </resources>

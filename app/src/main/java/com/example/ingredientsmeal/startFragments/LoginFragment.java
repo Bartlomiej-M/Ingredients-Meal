@@ -16,11 +16,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ingredientsmeal.MainActivity;
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomToastDialog;
-import com.example.ingredientsmeal.dialog.LoadingDialog;
-import com.example.ingredientsmeal.menu.MenuListMeals;
+import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
+import com.example.ingredientsmeal.menu.MainMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -130,18 +129,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             EmailInputTextLog.requestFocus();
             return;
         }
-        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.startLoadingDialog();
+        final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
+        customLoadingDialog.startLoadingDialog();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    loadingDialog.dismissDialog();
-                    startActivity(new Intent(getContext(), MenuListMeals.class));
+                    customLoadingDialog.dismissDialog();
+                    startActivity(new Intent(getContext(), MainMenu.class));
                     getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_left);
                 } else {
-                    loadingDialog.dismissDialog();
+                    customLoadingDialog.dismissDialog();
                     new CustomToastDialog(getActivity(), R.string.msg_toast_error_lg, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }

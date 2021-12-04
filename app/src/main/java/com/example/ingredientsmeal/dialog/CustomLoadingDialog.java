@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 
 import com.example.ingredientsmeal.R;
 
-public class LoadingDialog {
+public class CustomLoadingDialog {
     private Activity activity;
     private AlertDialog dialog;
 
-    public LoadingDialog(Activity myActivity) {
+    public CustomLoadingDialog(Activity myActivity) {
         activity = myActivity;
     }
 
