@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 loadFragment(fragment);
                 break;
             case R.id.btnForgotPassword:
-                fragment = new ForgotPassword();
+                fragment = new ForgotPasswordFragment();
                 loadFragment(fragment);
                 break;
             case R.id.btnLoginIn:

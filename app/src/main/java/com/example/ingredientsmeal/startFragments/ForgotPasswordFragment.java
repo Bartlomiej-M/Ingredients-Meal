@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class ForgotPassword extends Fragment implements View.OnClickListener{
+public class ForgotPasswordFragment extends Fragment implements View.OnClickListener{
 
     private Button btnArrowBackForgot, btnPasswordReset;
     private TextView titleLogin;
@@ -33,12 +33,12 @@ public class ForgotPassword extends Fragment implements View.OnClickListener{
     public FirebaseAuth auth;
     private float v = 0;
 
-    public ForgotPassword() {
+    public ForgotPasswordFragment() {
         // Required empty public constructor
     }
 
-    public static ForgotPassword newInstance(String param1, String param2) {
-        ForgotPassword fragment = new ForgotPassword();
+    public static ForgotPasswordFragment newInstance(String param1, String param2) {
+        ForgotPasswordFragment fragment = new ForgotPasswordFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
