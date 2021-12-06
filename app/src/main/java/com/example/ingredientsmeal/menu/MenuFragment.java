@@ -21,6 +21,8 @@ import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
+import com.example.ingredientsmeal.menuFragments.DinnerFragment;
+import com.example.ingredientsmeal.startFragments.WelcomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -86,7 +88,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.card_btn_dinner:
-
+                fragment = new DinnerFragment();
+                loadFragment(fragment);
                 break;
             case R.id.card_btn_history:
 
