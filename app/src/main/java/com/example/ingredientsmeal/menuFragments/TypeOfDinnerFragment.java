@@ -17,8 +17,6 @@ import android.widget.ListView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menu.MenuFragment;
-import com.example.ingredientsmeal.startFragments.ForgotPasswordFragment;
-import com.example.ingredientsmeal.startFragments.WelcomeFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,22 +26,24 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class DinnerFragment extends Fragment implements View.OnClickListener {
 
-    private ListView listView1;
+public class TypeOfDinnerFragment extends Fragment implements View.OnClickListener {
+
+    private ListView listView2;
 
     private ArrayList<String> myArrayList = new ArrayList<>();
 
     private DatabaseReference mRef;
 
-    private Button btnArrowBackDinner;
+    private Button btnArrowBackType;
 
-    public DinnerFragment() {
+    public TypeOfDinnerFragment() {
         // Required empty public constructor
     }
 
-    public static DinnerFragment newInstance(String param1, String param2) {
-        DinnerFragment fragment = new DinnerFragment();
+
+    public static TypeOfDinnerFragment newInstance(String param1, String param2) {
+        TypeOfDinnerFragment fragment = new TypeOfDinnerFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -61,42 +61,45 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_type_of_dinner, container, false);
 
         ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
 
-        listView1 = (ListView) rootView.findViewById(R.id.listView1);
-        listView1.setAdapter(myArrayAdapter);
+        listView2 = (ListView) rootView.findViewById(R.id.listView2);
+        listView2.setAdapter(myArrayAdapter);
 
-        btnArrowBackDinner = (Button) rootView.findViewById(R.id.btnArrowBackDinner);
-        btnArrowBackDinner.setOnClickListener(this);
+        btnArrowBackType = (Button) rootView.findViewById(R.id.btnArrowBackType);
+        btnArrowBackType.setOnClickListener(this);
 
+        String Dinner = getArguments().getString("dinner");
+        Log.d("TypeOfDinnerFragment", String.valueOf(Dinner));
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child("Dinner");
+        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key = childSnapshot.getKey();
+                    String key2 = childSnapshot.getKey();
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    myArrayList.add(key);
+                    myArrayList.add(key2);
                     myArrayAdapter.notifyDataSetChanged();
+
+                    listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Bundle data = new Bundle();
+
+                            data.putString("dinner", Dinner);
+                            data.putString("dish", myArrayList.get(position));
+
+                            Fragment fragment = new DishFragment();
+                            fragment.setArguments(data);
+                            loadFragment(fragment);
+                        }
+                    });
+
                 }
-
-                listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Bundle data = new Bundle();
-                        Log.d("Nazwa zmiennej", myArrayList.get(position));
-                        data.putString("dinner", myArrayList.get(position));
-
-                        Fragment fragment = new TypeOfDinnerFragment();
-                        fragment.setArguments(data);
-                        loadFragment(fragment);
-                    }
-                });
             }
 
             @Override
@@ -107,7 +110,6 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         hotelRef.addListenerForSingleValueEvent(eventListener);
 
 
-
         return rootView;
     }
 
@@ -116,8 +118,8 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
 
         switch (v.getId()) {
-            case R.id.btnArrowBackDinner:
-                fragment = new MenuFragment();
+            case R.id.btnArrowBackType:
+                fragment = new DinnerFragment();
                 loadFragment(fragment);
                 break;
 

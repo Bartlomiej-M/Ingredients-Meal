@@ -2,53 +2,59 @@ package com.example.ingredientsmeal.menuFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.menu.MenuFragment;
-import com.example.ingredientsmeal.startFragments.ForgotPasswordFragment;
-import com.example.ingredientsmeal.startFragments.WelcomeFragment;
+import com.example.ingredientsmeal.menuFragments.holders.DishViewHolder;
+import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class DinnerFragment extends Fragment implements View.OnClickListener {
 
-    private ListView listView1;
+public class DishFragment extends Fragment implements View.OnClickListener {
+
+    private ListView listView3;
 
     private ArrayList<String> myArrayList = new ArrayList<>();
 
-    private DatabaseReference mRef;
 
-    private Button btnArrowBackDinner;
 
-    public DinnerFragment() {
+    private Button btnArrowBackDish;
+
+    RecyclerView mRecyclerView;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference reference;
+
+
+    public DishFragment() {
         // Required empty public constructor
     }
 
-    public static DinnerFragment newInstance(String param1, String param2) {
-        DinnerFragment fragment = new DinnerFragment();
-        Bundle args = new Bundle();
 
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,18 +67,25 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dish, container, false);
 
         ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
 
-        listView1 = (ListView) rootView.findViewById(R.id.listView1);
-        listView1.setAdapter(myArrayAdapter);
+        listView3 = (ListView) rootView.findViewById(R.id.listView3);
+        listView3.setAdapter(myArrayAdapter);
 
-        btnArrowBackDinner = (Button) rootView.findViewById(R.id.btnArrowBackDinner);
-        btnArrowBackDinner.setOnClickListener(this);
+        btnArrowBackDish = (Button) rootView.findViewById(R.id.btnArrowBackDish);
+        btnArrowBackDish.setOnClickListener(this);
+
+
+        String Dinner = getArguments().getString("dinner");
+        String Dish = getArguments().getString("dish");
+
+        Log.d("DishFragment:Dinner:", String.valueOf(Dinner));
+        Log.d("DishFragment:Dish:", String.valueOf(Dish));
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child("Dinner");
+        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner).child(Dish);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -83,20 +96,6 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
                     myArrayList.add(key);
                     myArrayAdapter.notifyDataSetChanged();
                 }
-
-                listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Bundle data = new Bundle();
-                        Log.d("Nazwa zmiennej", myArrayList.get(position));
-                        data.putString("dinner", myArrayList.get(position));
-
-                        Fragment fragment = new TypeOfDinnerFragment();
-                        fragment.setArguments(data);
-                        loadFragment(fragment);
-                    }
-                });
             }
 
             @Override
@@ -107,7 +106,6 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         hotelRef.addListenerForSingleValueEvent(eventListener);
 
 
-
         return rootView;
     }
 
@@ -116,8 +114,8 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
 
         switch (v.getId()) {
-            case R.id.btnArrowBackDinner:
-                fragment = new MenuFragment();
+            case R.id.btnArrowBackDish:
+                fragment = new DinnerFragment();
                 loadFragment(fragment);
                 break;
 
@@ -131,4 +129,5 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         fragmentTransaction.replace(R.id.fragmentMenu, fragment).commit();
         fragmentTransaction.addToBackStack(null);
     }
+
 }
