@@ -13,15 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.menuFragments.holders.DishViewHolder;
+import com.example.ingredientsmeal.menuFragments.adapters.DishViewAdapter;
 import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,32 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Member;
-import java.util.ArrayList;
-import java.util.Map;
-
 
 public class DishFragment extends Fragment implements View.OnClickListener {
 
-    private ListView listView3;
-
-    private ArrayList<String> myArrayList = new ArrayList<>();
-
-
-
     private Button btnArrowBackDish;
-
-    RecyclerView mRecyclerView;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference reference;
-
-
-    public DishFragment() {
-        // Required empty public constructor
-    }
-
-
-
+    private RecyclerView recview;
+    private DishViewAdapter dishViewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +45,10 @@ public class DishFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dish, container, false);
 
-        ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
+        btnArrowBackDish = (Button) rootView.findViewById(R.id.btnArrowBackDish);
+        btnArrowBackDish.setOnClickListener(this);
+
+       /* ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
 
         listView3 = (ListView) rootView.findViewById(R.id.listView3);
         listView3.setAdapter(myArrayAdapter);
@@ -103,10 +82,55 @@ public class DishFragment extends Fragment implements View.OnClickListener {
                 myArrayAdapter.notifyDataSetChanged();
             }
         };
-        hotelRef.addListenerForSingleValueEvent(eventListener);
+        hotelRef.addListenerForSingleValueEvent(eventListener);*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        recview = (RecyclerView) rootView.findViewById(R.id.recview);
+        recview.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+        String Dinner = getArguments().getString("dinner");
+        String Dish = getArguments().getString("dish");
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner).child(Dish);
+
+        FirebaseRecyclerOptions<DishModel> options =
+                new FirebaseRecyclerOptions.Builder<DishModel>()
+                        .setQuery(hotelRef, DishModel.class)
+                        .build();
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    String key = childSnapshot.getKey();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        dishViewAdapter = new DishViewAdapter(options);
+        recview.setAdapter(dishViewAdapter);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        dishViewAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        dishViewAdapter.stopListening();
     }
 
     @Override

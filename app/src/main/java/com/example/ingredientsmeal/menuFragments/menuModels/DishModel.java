@@ -1,26 +1,58 @@
 package com.example.ingredientsmeal.menuFragments.menuModels;
 
 public class DishModel {
-    String title, image;
+    String Poziom, Zdjecie, CzasTrwania, EnergiaWporcji, Porcja;
 
-    public void DishInterface(){
-        this.title = title;
-        this.image = image;
+    //a blank constructor//
+    public DishModel() {
+
     }
 
-    public String getTitle() {
-        return title;
+    public DishModel(String Poziom, String Zdjecie, String CzasTrwania, String EnergiaWporcji, String Porcja) {
+        this.Poziom = Poziom;
+        this.Zdjecie = Zdjecie;
+        this.CzasTrwania = CzasTrwania;
+        this.EnergiaWporcji = EnergiaWporcji;
+        this.Porcja = Porcja;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getCzasTrwania() {
+        return CzasTrwania;
     }
 
-    public String getImage() {
-        return image;
+    public void setCzasTrwania(String czasTrwania) {
+        CzasTrwania = czasTrwania;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public String getEnergiaWporcji() {
+        return EnergiaWporcji;
+    }
+
+    public void setEnergiaWporcji(String energiaWporcji) {
+        EnergiaWporcji = energiaWporcji;
+    }
+
+    public String getPorcja() {
+        return Porcja;
+    }
+
+    public void setPorcja(String Porcja) {
+        Porcja = Porcja;
+    }
+
+    public String getPoziom() {
+        return Poziom;
+    }
+
+    public void setPoziom(String poziom) {
+        Poziom = poziom;
+    }
+
+    public String getZdjecie() {
+        return Zdjecie;
+    }
+
+    public void setZdjecie(String zdjecie) {
+        Zdjecie = zdjecie;
     }
 }
