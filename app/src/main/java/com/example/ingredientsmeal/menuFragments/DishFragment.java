@@ -14,6 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menuFragments.adapters.DishViewAdapter;
@@ -32,6 +35,10 @@ public class DishFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recview;
     private DishViewAdapter dishViewAdapter;
 
+    private static String FirebaseFirstStepDinner;
+    private static String FirebaseFirstSecondDinner;
+    private static String FirebaseFirstthirdDinner;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,80 +52,36 @@ public class DishFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dish, container, false);
 
-        btnArrowBackDish = (Button) rootView.findViewById(R.id.btnArrowBackDish);
-        btnArrowBackDish.setOnClickListener(this);
-
-       /* ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
-
-        listView3 = (ListView) rootView.findViewById(R.id.listView3);
-        listView3.setAdapter(myArrayAdapter);
-
-        btnArrowBackDish = (Button) rootView.findViewById(R.id.btnArrowBackDish);
-        btnArrowBackDish.setOnClickListener(this);
-
-
-        String Dinner = getArguments().getString("dinner");
-        String Dish = getArguments().getString("dish");
-
-        Log.d("DishFragment:Dinner:", String.valueOf(Dinner));
-        Log.d("DishFragment:Dish:", String.valueOf(Dish));
-
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner).child(Dish);
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key = childSnapshot.getKey();
-                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    myArrayList.add(key);
-                    myArrayAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                myArrayAdapter.notifyDataSetChanged();
-            }
-        };
-        hotelRef.addListenerForSingleValueEvent(eventListener);*/
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         recview = (RecyclerView) rootView.findViewById(R.id.recview);
         recview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        String Dinner = getArguments().getString("dinner");
-        String Dish = getArguments().getString("dish");
+        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
+        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
+        FirebaseFirstthirdDinner = getArguments().getString("FirebaseFirstthirdDinner");
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner).child(Dish);
+        DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner).child(FirebaseFirstSecondDinner).child(FirebaseFirstthirdDinner);
 
         FirebaseRecyclerOptions<DishModel> options =
                 new FirebaseRecyclerOptions.Builder<DishModel>()
                         .setQuery(hotelRef, DishModel.class)
                         .build();
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key = childSnapshot.getKey();
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
         dishViewAdapter = new DishViewAdapter(options);
         recview.setAdapter(dishViewAdapter);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return rootView;
+    }
+
+    public static String getFirebaseFirstStepDinner() {
+
+        return FirebaseFirstStepDinner;
+    }
+
+    public static String getFirebaseFirstSecondDinner() {
+        return FirebaseFirstSecondDinner;
+    }
+
+    public static String getFirebaseFirstthirdDinner() {
+        return FirebaseFirstthirdDinner;
     }
 
     @Override
@@ -138,15 +101,12 @@ public class DishFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
 
         switch (v.getId()) {
-            case R.id.btnArrowBackDish:
-                fragment = new DinnerFragment();
-                loadFragment(fragment);
-                break;
+
 
         }
     }
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_left);

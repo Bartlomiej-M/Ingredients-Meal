@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menu.MenuFragment;
@@ -29,13 +31,13 @@ import java.util.Map;
 
 public class TypeOfDinnerFragment extends Fragment implements View.OnClickListener {
 
-    private ListView listView2;
-
-    private ArrayList<String> myArrayList = new ArrayList<>();
-
-    private DatabaseReference mRef;
+    private ListView typeOfDinnerListView;
+    private ArrayList<String> typeOfDinnerArrayList = new ArrayList<>();
+    private ArrayAdapter<String> typeOfDinnerArrayAdapter;
 
     private Button btnArrowBackType;
+    private String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner;
+
 
     public TypeOfDinnerFragment() {
         // Required empty public constructor
@@ -63,35 +65,49 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_of_dinner, container, false);
 
-        ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, myArrayList);
+        typeOfDinnerArrayList.clear();
+        typeOfDinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, typeOfDinnerArrayList);
 
-        listView2 = (ListView) rootView.findViewById(R.id.listView2);
-        listView2.setAdapter(myArrayAdapter);
+        typeOfDinnerListView = (ListView) rootView.findViewById(R.id.typeOfDinnerListView);
+        typeOfDinnerListView.setAdapter(typeOfDinnerArrayAdapter);
 
-        btnArrowBackType = (Button) rootView.findViewById(R.id.btnArrowBackType);
-        btnArrowBackType.setOnClickListener(this);
+        displayCategoryDinnerList();//wywołanie metody wyswietlajace liste typów dań z wybranej kategori posiłkowych
 
-        String Dinner = getArguments().getString("dinner");
-        Log.d("TypeOfDinnerFragment", String.valueOf(Dinner));
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = null;
+
+        switch (v.getId()) {
+        }
+    }
+
+    private void displayCategoryDinnerList() {
+        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
+        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child("Dinner").child(Dinner);
+        DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner).child(FirebaseFirstSecondDinner);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                     String key2 = childSnapshot.getKey();
-                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    myArrayList.add(key2);
-                    myArrayAdapter.notifyDataSetChanged();
 
-                    listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    typeOfDinnerArrayList.add(key2);
+                    typeOfDinnerArrayAdapter.notifyDataSetChanged();
+
+                    typeOfDinnerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Bundle data = new Bundle();
 
-                            data.putString("dinner", Dinner);
-                            data.putString("dish", myArrayList.get(position));
+                            data.putString("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
+                            data.putString("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
+                            data.putString("FirebaseFirstthirdDinner", typeOfDinnerArrayList.get(position));
 
                             Fragment fragment = new DishFragment();
                             fragment.setArguments(data);
@@ -104,26 +120,10 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                myArrayAdapter.notifyDataSetChanged();
+                typeOfDinnerArrayAdapter.notifyDataSetChanged();
             }
         };
         hotelRef.addListenerForSingleValueEvent(eventListener);
-
-
-        return rootView;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Fragment fragment = null;
-
-        switch (v.getId()) {
-            case R.id.btnArrowBackType:
-                fragment = new DinnerFragment();
-                loadFragment(fragment);
-                break;
-
-        }
     }
 
     private void loadFragment(Fragment fragment) {

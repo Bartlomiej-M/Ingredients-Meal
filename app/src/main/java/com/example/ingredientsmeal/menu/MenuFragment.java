@@ -14,16 +14,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.ingredientsmeal.MainActivity;
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomAlertDialog;
-import com.example.ingredientsmeal.dialog.CustomToastDialog;
+
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
-import com.example.ingredientsmeal.startFragments.WelcomeFragment;
-import com.google.firebase.auth.FirebaseAuth;
+
 
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
@@ -31,7 +30,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private CardView card_btn_dinner, card_btn_history, card_btn_receipt,
             card_btn_addMeal, card_btn_settings, card_btn_logout;
 
-    Fragment fragment = null;
+    private Fragment fragment = null;
 
     private float v = 0;
 
