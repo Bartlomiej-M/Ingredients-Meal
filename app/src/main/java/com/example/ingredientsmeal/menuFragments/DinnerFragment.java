@@ -1,13 +1,20 @@
 package com.example.ingredientsmeal.menuFragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,8 +23,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.menu.MainMenu;
 import com.example.ingredientsmeal.menu.MenuFragment;
 import com.example.ingredientsmeal.startFragments.ForgotPasswordFragment;
 import com.example.ingredientsmeal.startFragments.WelcomeFragment;
@@ -36,8 +45,8 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     private ArrayList<String> categoryArrayList = new ArrayList<>();
     private ArrayAdapter<String> categoryArrayAdapter;
 
-    private Button btnArrowBackDinner;
     private String FirebaseFirstStepDinner;
+    private android.app.Fragment ActionBarActivity;
 
     public DinnerFragment() {
         // Required empty public constructor
@@ -59,6 +68,7 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,9 +78,35 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         categoryDinnerList = (ListView) rootView.findViewById(R.id.categoryDinnerList);
         categoryDinnerList.setAdapter(categoryArrayAdapter);
 
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         displayCategoryDinnerList();//wywołanie metody wyswietlajacej liste kategori posiłkowych
 
         return rootView;
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.custom_menu_toolbar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.nav_search) {
+            Toast.makeText(getContext(), "DUPADUPADUPA", Toast.LENGTH_LONG).show();
+        }
+/*        switch(item.getItemId()){
+            case android.R.id.home:
+                getActivity().onBackPressed();
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

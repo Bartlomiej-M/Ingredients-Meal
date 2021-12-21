@@ -1,17 +1,24 @@
 package com.example.ingredientsmeal.menu;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,6 +39,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Fragment fragment = null;
 
+    Toolbar toolbar;
+
     private float v = 0;
 
     final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
@@ -51,11 +60,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
 
         }
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,8 +90,30 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         card_btn_logout = (CardView) rootView.findViewById(R.id.card_btn_logout);
         card_btn_logout.setOnClickListener(this);
 
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        setHasOptionsMenu(true);
+
         SetComponentsInLayout();
+
         return rootView;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.nav_search).setVisible(false);
+        menu.findItem(R.id.nav_settings).setVisible(true);
     }
 
     @Override
