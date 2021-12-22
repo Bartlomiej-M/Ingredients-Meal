@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
@@ -21,14 +22,15 @@ import com.example.ingredientsmeal.R;
 public class MainMenu extends AppCompatActivity implements View.OnClickListener {
 
     private Fragment fragment = null;
-
+    public TextView toolbarTitleTextView;
+    public  Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Window window = this.getWindow();
@@ -37,6 +39,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         window.setStatusBarColor(this.getResources().getColor(R.color.black));
 
         fragment = new MenuFragment();
+
         loadFragment(fragment);
     }
 
@@ -67,6 +70,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void changeTitleToolbar(String x){
+        toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText(x);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
     }
 
     private void loadFragment(Fragment fragment) {

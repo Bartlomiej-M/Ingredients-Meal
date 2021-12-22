@@ -2,12 +2,15 @@ package com.example.ingredientsmeal.menuFragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -65,6 +68,20 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
 
+        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
+        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
+        FirebaseFirstthirdDinner = getArguments().getString("FirebaseFirstthirdDinner");
+        FirebaseFirstfourthDinner = getArguments().getString("FirebasefourthStepeDinner");
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText(FirebaseFirstfourthDinner);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         btnViewRecipe = (Button) rootView.findViewById(R.id.btnViewRecipe);
         btnViewRecipe.setOnClickListener(this);
 
@@ -75,11 +92,6 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
         detailsListView = (ListView) rootView.findViewById(R.id.detailsListView);
         detailsListView.setAdapter(detailsArrayAdapter);
-
-        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
-        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
-        FirebaseFirstthirdDinner = getArguments().getString("FirebaseFirstthirdDinner");
-        FirebaseFirstfourthDinner = getArguments().getString("FirebasefourthStepeDinner");
 
         return rootView;
     }
@@ -97,6 +109,13 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
                 break;
         }
+    }
+    
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.nav_search).setVisible(false);
+        menu.findItem(R.id.nav_settings).setVisible(true);
     }
 
     public void openViewRecipe() {

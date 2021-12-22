@@ -45,6 +45,7 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     private ArrayList<String> categoryArrayList = new ArrayList<>();
     private ArrayAdapter<String> categoryArrayAdapter;
 
+    public  MainMenu mainMenu = new MainMenu();
     private String FirebaseFirstStepDinner;
     private android.app.Fragment ActionBarActivity;
 
@@ -73,15 +74,20 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
-        categoryArrayList.clear();
-        categoryArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, categoryArrayList);
-        categoryDinnerList = (ListView) rootView.findViewById(R.id.categoryDinnerList);
-        categoryDinnerList.setAdapter(categoryArrayAdapter);
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText("Dania");
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        categoryArrayList.clear();
+        categoryArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, categoryArrayList);
+        categoryDinnerList = (ListView) rootView.findViewById(R.id.categoryDinnerList);
+        categoryDinnerList.setAdapter(categoryArrayAdapter);
 
         displayCategoryDinnerList();//wywołanie metody wyswietlajacej liste kategori posiłkowych
 
@@ -89,24 +95,14 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.custom_menu_toolbar, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.nav_search) {
-            Toast.makeText(getContext(), "DUPADUPADUPA", Toast.LENGTH_LONG).show();
-        }
-/*        switch(item.getItemId()){
-            case android.R.id.home:
-                getActivity().onBackPressed();
-        }*/
-        return super.onOptionsItemSelected(item);
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override

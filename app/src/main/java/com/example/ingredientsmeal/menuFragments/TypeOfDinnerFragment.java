@@ -2,6 +2,8 @@ package com.example.ingredientsmeal.menuFragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -65,6 +67,18 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_of_dinner, container, false);
 
+        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
+        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText(FirebaseFirstSecondDinner.toString());
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         typeOfDinnerArrayList.clear();
         typeOfDinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, typeOfDinnerArrayList);
 
@@ -85,9 +99,6 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
     }
 
     private void displayCategoryDinnerList() {
-        FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
-        FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
-
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner).child(FirebaseFirstSecondDinner);
 

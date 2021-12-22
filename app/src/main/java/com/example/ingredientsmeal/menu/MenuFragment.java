@@ -39,8 +39,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Fragment fragment = null;
 
-    Toolbar toolbar;
-
     private float v = 0;
 
     final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
@@ -72,6 +70,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText("Menu Główne");
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         card_btn_dinner = (CardView) rootView.findViewById(R.id.card_btn_dinner);
         card_btn_dinner.setOnClickListener(this);
 
@@ -89,12 +97,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         card_btn_logout = (CardView) rootView.findViewById(R.id.card_btn_logout);
         card_btn_logout.setOnClickListener(this);
-
-
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         setHasOptionsMenu(true);
 

@@ -3,6 +3,8 @@ package com.example.ingredientsmeal.menuFragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -59,6 +61,16 @@ public class DishFragment extends Fragment implements View.OnClickListener {
         FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
         FirebaseFirstthirdDinner = getArguments().getString("FirebaseFirstthirdDinner");
 
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText(FirebaseFirstthirdDinner.toString());
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner).child(FirebaseFirstSecondDinner).child(FirebaseFirstthirdDinner);
 
@@ -68,6 +80,7 @@ public class DishFragment extends Fragment implements View.OnClickListener {
                         .build();
         dishViewAdapter = new DishViewAdapter(options);
         recview.setAdapter(dishViewAdapter);
+
         return rootView;
     }
 
