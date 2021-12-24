@@ -37,7 +37,6 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
     private ArrayList<String> typeOfDinnerArrayList = new ArrayList<>();
     private ArrayAdapter<String> typeOfDinnerArrayAdapter;
 
-    private Button btnArrowBackType;
     private String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner;
 
 

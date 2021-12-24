@@ -2,57 +2,37 @@ package com.example.ingredientsmeal.menuFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.startFragments.ForgotPasswordFragment;
-import com.example.ingredientsmeal.startFragments.WelcomeFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Map;
+import com.example.ingredientsmeal.menuFragments.viewpages.IngredientsFragment;
+import com.example.ingredientsmeal.menuFragments.viewpages.RecipeFragment;
+import com.example.ingredientsmeal.menuFragments.viewpages.ViewDetailsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 
-public class DetailsFragment extends Fragment implements View.OnClickListener {
+public class DetailsFragment extends Fragment {
 
-    private Button btnArrowBackdetails, btnViewRecipe, btnViewIngredients;
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
-    private ListView detailsListView;
-
-    private ArrayList<String> detailsArrayList = new ArrayList<>();
-    public ArrayAdapter<String> detailsArrayAdapter;
+    public ViewPager2 viewPager2;
 
     public DetailsFragment() {
         // Required empty public constructor
-    }
-
-
-    public static DetailsFragment newInstance(String param1, String param2) {
-        DetailsFragment fragment = new DetailsFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -71,7 +51,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
         FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
         FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
         FirebaseFirstthirdDinner = getArguments().getString("FirebaseFirstthirdDinner");
-        FirebaseFirstfourthDinner = getArguments().getString("FirebasefourthStepeDinner");
+        FirebaseFirstfourthDinner = getArguments().getString("FirebaseFirstfourthDinner");
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -82,112 +62,44 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
         toolbarTitleTextView.setText(FirebaseFirstfourthDinner);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        btnViewRecipe = (Button) rootView.findViewById(R.id.btnViewRecipe);
-        btnViewRecipe.setOnClickListener(this);
+        TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
+        viewPager2 = rootView.findViewById(R.id.view_pager);
 
-        btnViewIngredients = (Button) rootView.findViewById(R.id.btnViewIngredients);
-        btnViewIngredients.setOnClickListener(this);
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
+        arguments.putSerializable("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
+        arguments.putSerializable("FirebaseFirstthirdDinner", FirebaseFirstthirdDinner);
+        arguments.putSerializable("FirebaseFirstfourthDinner", FirebaseFirstfourthDinner);
 
-        detailsArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, detailsArrayList);
+        ViewDetailsPagerAdapter adapter = new ViewDetailsPagerAdapter(getActivity(), arguments);
+        viewPager2.setAdapter(adapter);
 
-        detailsListView = (ListView) rootView.findViewById(R.id.detailsListView);
-        detailsListView.setAdapter(detailsArrayAdapter);
+        new TabLayoutMediator(tabLayout, viewPager2,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+
+                        if (position == 0) {
+                            tab.setText("Przygotowanie");
+                            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+                            ingredientsFragment.setArguments(arguments);
+
+                        } else {
+                            tab.setText("Składniki");
+                            RecipeFragment recipeFragment = new RecipeFragment();
+                            recipeFragment.setArguments(arguments);
+                        }
+                    }
+                }).attach();
 
         return rootView;
     }
 
     @Override
-    public void onClick(View v) {
-        Fragment fragment = null;
-
-        switch (v.getId()) {
-            case R.id.btnViewRecipe:
-                openViewRecipe();
-                break;
-            case R.id.btnViewIngredients:
-                openViewIngredients();
-
-                break;
-        }
-    }
-    
-    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.nav_search).setVisible(false);
         menu.findItem(R.id.nav_settings).setVisible(true);
-    }
-
-    public void openViewRecipe() {
-        detailsArrayList.clear();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner)
-                .child(FirebaseFirstSecondDinner)
-                .child(FirebaseFirstthirdDinner)
-                .child(FirebaseFirstfourthDinner)
-                .child("Przygotowanie");
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key = childSnapshot.getKey();
-                    String value = (String) childSnapshot.getValue();
-
-                    detailsArrayList.add(key + " " + value);
-                    detailsArrayAdapter.notifyDataSetChanged();
-                }
-
-                detailsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                detailsArrayAdapter.notifyDataSetChanged();
-            }
-        };
-        hotelRef.addListenerForSingleValueEvent(eventListener);
-    }
-
-    public void openViewIngredients() {
-        detailsArrayList.clear();
-        DatabaseReference rootRef2 = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelRef2 = rootRef2.child(FirebaseFirstStepDinner)
-                .child(FirebaseFirstSecondDinner)
-                .child(FirebaseFirstthirdDinner)
-                .child(FirebaseFirstfourthDinner)
-                .child("Składniki");
-
-        ValueEventListener eventListener2 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key = childSnapshot.getKey();
-                    String value = (String) childSnapshot.getValue();
-
-                    detailsArrayList.add(key + " " + value);
-                    detailsArrayAdapter.notifyDataSetChanged();
-                }
-
-                detailsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                detailsArrayAdapter.notifyDataSetChanged();
-            }
-        };
-        hotelRef2.addListenerForSingleValueEvent(eventListener2);
     }
 
     public void loadFragment(Fragment fragment) {
