@@ -80,12 +80,12 @@ public class DetailsFragment extends Fragment {
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
 
                         if (position == 0) {
-                            tab.setText("Przygotowanie");
+                            tab.setText("Składniki");
                             IngredientsFragment ingredientsFragment = new IngredientsFragment();
                             ingredientsFragment.setArguments(arguments);
 
                         } else {
-                            tab.setText("Składniki");
+                            tab.setText("Przygotowanie");
                             RecipeFragment recipeFragment = new RecipeFragment();
                             recipeFragment.setArguments(arguments);
                         }

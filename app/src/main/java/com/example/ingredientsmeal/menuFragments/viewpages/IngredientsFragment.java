@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menuFragments.DetailsFragment;
@@ -25,9 +27,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class IngredientsFragment extends Fragment {
+public class IngredientsFragment extends Fragment implements View.OnClickListener {
 
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
+    private Button btnSendIngredients;
 
 
     private Bundle bundle;
@@ -68,6 +71,9 @@ public class IngredientsFragment extends Fragment {
         ingredientsArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, ingredientsArrayList);
         ingredientsListView = (ListView) rootView.findViewById(R.id.ingredientsListView);
         ingredientsListView.setAdapter(ingredientsArrayAdapter);
+
+        btnSendIngredients = (Button) rootView.findViewById(R.id.btnSendIngredients);
+        btnSendIngredients.setOnClickListener(this);
 
         openViewIngredients();
 
@@ -118,5 +124,17 @@ public class IngredientsFragment extends Fragment {
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_left);
         fragmentTransaction.replace(R.id.fragmentMenu, fragment).commit();
         fragmentTransaction.addToBackStack(null);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = null;
+
+        switch (v.getId()) {
+            case R.id.btnSendIngredients:
+                Toast.makeText(getContext(), "jnfijndfjngf", Toast.LENGTH_LONG).show();
+                break;
+
+        }
     }
 }

@@ -1,154 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/btnSeeDetails"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@color/black"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="#AD2A9D8F"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="5dp">
+    android:layout_margin="5dp">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnSeeDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:elevation="3dp"
+        android:padding="5dp"
+        card_view:cardCornerRadius="10dp">
 
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:background="#B2FF59">
+
+            <ImageView
+                android:id="@+id/rImageView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:focusable="true"
+                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/rImageView"
-                    android:layout_width="280dp"
-                    android:layout_height="125dp"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
-                    android:focusable="true"
-                    android:scaleType="centerCrop" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
+                android:layout_below="@+id/rImageView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true">
 
                 <TextView
                     android:id="@+id/rMealName"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/zero"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/TitlePoziom"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:text="Poziom: "
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rPoziom"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/first"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/TitleCzasTrwania"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Czas: "
-                    android:textColor="@color/white"
+                    android:text="Czas przygotowania: "
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rCzasTrwania"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/second"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/TitleEnergia_w_Porcji"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:text="Energia w Porcji: "
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rEnergia_w_Porcji"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fourth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/third"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/TitlePorcja"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:text="Porcja: "
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rPorcja"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
