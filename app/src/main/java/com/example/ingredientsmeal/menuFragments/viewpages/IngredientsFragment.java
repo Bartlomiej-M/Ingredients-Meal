@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menuFragments.DetailsFragment;
+import com.example.ingredientsmeal.menuFragments.adapters.RecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +35,11 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
     private Button btnSendIngredients;
 
-
     private Bundle bundle;
-    public ListView ingredientsListView;
-    public ArrayList<String> ingredientsArrayList = new ArrayList<>();
-    public ArrayAdapter<String> ingredientsArrayAdapter;
 
+    public ArrayList<String> ingredientsArrayList = new ArrayList<>();
+    public ArrayList<String> ingredientskeyArrayList = new ArrayList<>();
+    RecyclerView myView;
 
     public IngredientsFragment() {
         // Required empty public constructor
@@ -68,13 +70,10 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ingredients, container, false);
 
-        ingredientsArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, ingredientsArrayList);
-        ingredientsListView = (ListView) rootView.findViewById(R.id.ingredientsListView);
-        ingredientsListView.setAdapter(ingredientsArrayAdapter);
-
         btnSendIngredients = (Button) rootView.findViewById(R.id.btnSendIngredients);
         btnSendIngredients.setOnClickListener(this);
 
+        myView =  (RecyclerView) rootView.findViewById(R.id.ingredientsListView);
         openViewIngredients();
 
         return rootView;
@@ -98,21 +97,32 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
                     String key = childSnapshot.getKey();
                     String value = (String) childSnapshot.getValue();
 
-                    ingredientsArrayList.add(key + " " + value);
-                    ingredientsArrayAdapter.notifyDataSetChanged();
+                    ingredientskeyArrayList.add(key);
+                    ingredientsArrayList.add(value);
+
+
+                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(ingredientskeyArrayList, ingredientsArrayList);
+
+                    myView.setHasFixedSize(true);
+                    myView.setAdapter(adapter);
+
+                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    myView.setLayoutManager(llm);
+
                 }
 
-                ingredientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*                ingredientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     }
-                });
+                });*/
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                ingredientsArrayAdapter.notifyDataSetChanged();
+            /*    ingredientsArrayAdapter.notifyDataSetChanged();*/
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);
