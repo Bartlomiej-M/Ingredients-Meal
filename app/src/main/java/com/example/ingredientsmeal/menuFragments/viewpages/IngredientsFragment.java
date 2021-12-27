@@ -1,32 +1,23 @@
 package com.example.ingredientsmeal.menuFragments.viewpages;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.menuFragments.DetailsFragment;
-import com.example.ingredientsmeal.menuFragments.adapters.RecyclerViewAdapter;
+import com.example.ingredientsmeal.menuFragments.adapters.IngredientsRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 
@@ -34,12 +25,10 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
 
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
     private Button btnSendIngredients;
-
     private Bundle bundle;
-
     public ArrayList<String> ingredientsArrayList = new ArrayList<>();
     public ArrayList<String> ingredientskeyArrayList = new ArrayList<>();
-    RecyclerView myView;
+    private RecyclerView ingredientsRecyclerView;
 
     public IngredientsFragment() {
         // Required empty public constructor
@@ -73,7 +62,7 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
         btnSendIngredients = (Button) rootView.findViewById(R.id.btnSendIngredients);
         btnSendIngredients.setOnClickListener(this);
 
-        myView =  (RecyclerView) rootView.findViewById(R.id.ingredientsListView);
+        ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsListView);
         openViewIngredients();
 
         return rootView;
@@ -100,29 +89,20 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
                     ingredientskeyArrayList.add(key);
                     ingredientsArrayList.add(value);
 
-
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(ingredientskeyArrayList, ingredientsArrayList);
-
-                    myView.setHasFixedSize(true);
-                    myView.setAdapter(adapter);
+                    IngredientsRecyclerViewAdapter adapter = new IngredientsRecyclerViewAdapter(ingredientskeyArrayList, ingredientsArrayList);
+                    ingredientsRecyclerView.setHasFixedSize(true);
+                    ingredientsRecyclerView.setAdapter(adapter);
 
                     LinearLayoutManager llm = new LinearLayoutManager(getContext());
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
-                    myView.setLayoutManager(llm);
+                    ingredientsRecyclerView.setLayoutManager(llm);
 
                 }
-
-/*                ingredientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });*/
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-            /*    ingredientsArrayAdapter.notifyDataSetChanged();*/
+                //"Tu nalezy wstawic komunikat o bledzie albo informacje w freagmencie ze jest null error base"
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);
@@ -142,7 +122,7 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
 
         switch (v.getId()) {
             case R.id.btnSendIngredients:
-                Toast.makeText(getContext(), "jnfijndfjngf", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Przycisk wysyłania składników", Toast.LENGTH_LONG).show();
                 break;
 
         }

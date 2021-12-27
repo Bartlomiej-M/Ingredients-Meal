@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingredientsmeal.R;
@@ -24,11 +23,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-public class DishViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishViewAdapter.DishViewHolder>{
+public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishRecyclerViewAdapter.DishViewHolder>{
 
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner;
 
-    public DishViewAdapter(@NonNull FirebaseRecyclerOptions<DishModel> options) {
+    public DishRecyclerViewAdapter(@NonNull FirebaseRecyclerOptions<DishModel> options) {
         super(options);
     }
 
@@ -45,10 +44,8 @@ public class DishViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishView
 
         holder.btnSeeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
-                holder.btnSeeDetails.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            public void onClick(View view) {
+
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         DetailsFragment detailsFragment = new DetailsFragment();
                         Bundle data = new Bundle();
@@ -60,8 +57,6 @@ public class DishViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishView
 
                         detailsFragment.setArguments(data);
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentMenu, detailsFragment).addToBackStack(null).commit();
-                    }
-                });
             }
         });
     }
@@ -87,7 +82,7 @@ public class DishViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishView
             rCzasTrwania = (TextView) itemView.findViewById(R.id.rCzasTrwania);
             rEnergia_w_Porcji = (TextView) itemView.findViewById(R.id.rEnergia_w_Porcji);
             rPorcja = (TextView) itemView.findViewById(R.id.rPorcja);
-            btnSeeDetails = (CardView) itemView.findViewById(R.id.btnSeeDetails);
+            btnSeeDetails = (CardView) itemView.findViewById(R.id.cardViewDish);
 
             FirebaseFirstStepDinner = DishFragment.getFirebaseFirstStepDinner();
             FirebaseFirstSecondDinner = DishFragment.getFirebaseFirstSecondDinner();

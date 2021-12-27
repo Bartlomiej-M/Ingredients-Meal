@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardViewIngredients"
+    android:id="@+id/cardViewRecipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
     android:background="#787878"
     app:cardCornerRadius="10dp"
     app:cardBackgroundColor="#787878"
     android:layout_margin="5dp">
 
     <LinearLayout
-        android:id="@+id/llIngredients"
+        android:id="@+id/llRecipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -21,9 +22,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:orientation="horizontal">
 
-            <FrameLayout
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -31,11 +32,11 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/numberIngredients"
+                    android:id="@+id/textNumberRecipe"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/circle_green"
+                    android:background="@drawable/circle_red"
                     android:gravity="center"
                     android:shadowRadius="10.0"
                     android:textColor="@android:color/black"
@@ -43,35 +44,31 @@
                     android:textSize="18sp" />
 
             </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llRecipe"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:background="#787878"
-            android:layout_weight="2"
-            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/textIngredients"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:textColor="#000000"
-                android:textSize="18dp" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/chbContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:buttonTint="@color/black" />
+                <TextView
+                    android:id="@+id/textViewRecipeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

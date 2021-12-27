@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.menuFragments.adapters.RecipeRecyclerViewAdapter;
+import com.example.ingredientsmeal.menuFragments.adapters.TypeRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +30,12 @@ import java.util.ArrayList;
 
 public class RecipeFragment extends Fragment {
 
-    public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
+    public static String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
 
-    public ListView recipeListView;
     private Bundle bundle;
-    public ArrayList<String> recipeArrayList = new ArrayList<>();
-    public ArrayAdapter<String> recipeArrayAdapter;
+    public ArrayList<String> recipeValueArrayList = new ArrayList<>();
+    public ArrayList<String> recipeKeyArrayList = new ArrayList<>();
+    private RecyclerView recipeRecyclerView;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -58,24 +62,29 @@ public class RecipeFragment extends Fragment {
         }
     }
 
+    public static String getFirebaseFirstStepDinner() { return FirebaseFirstStepDinner; }
+
+    public static String getFirebaseFirstSecondDinner() { return FirebaseFirstSecondDinner; }
+
+    public static String getFirebaseFirstthirdDinner() { return FirebaseFirstthirdDinner; }
+
+    public static String getFirebaseFirstfourthDinner() { return FirebaseFirstfourthDinner; }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        recipeArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, recipeArrayList);
-
-        recipeListView = (ListView) rootView.findViewById(R.id.recipeListView);
-        recipeListView.setAdapter(recipeArrayAdapter);
+        recipeRecyclerView = (RecyclerView) rootView.findViewById(R.id.recipeRecyclerView);
 
         openViewRecipe();
 
         return rootView;
     }
 
-
     public void openViewRecipe() {
-        recipeArrayList.clear();
+        recipeValueArrayList.clear();
+
         DatabaseReference rootRef2 = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelRef2 = rootRef2.child(FirebaseFirstStepDinner)
                 .child(FirebaseFirstSecondDinner)
@@ -90,21 +99,23 @@ public class RecipeFragment extends Fragment {
                     String key = childSnapshot.getKey();
                     String value = (String) childSnapshot.getValue();
 
-                    recipeArrayList.add(key + " " + value);
-                    recipeArrayAdapter.notifyDataSetChanged();
+                    recipeValueArrayList.add(value);
+                    recipeKeyArrayList.add(key);
+
+                    RecipeRecyclerViewAdapter adapter = new RecipeRecyclerViewAdapter(recipeKeyArrayList, recipeValueArrayList);
+
+                    recipeRecyclerView.setHasFixedSize(true);
+                    recipeRecyclerView.setAdapter(adapter);
+
+                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    recipeRecyclerView.setLayoutManager(llm);
                 }
-
-                recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                recipeArrayAdapter.notifyDataSetChanged();
+
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);

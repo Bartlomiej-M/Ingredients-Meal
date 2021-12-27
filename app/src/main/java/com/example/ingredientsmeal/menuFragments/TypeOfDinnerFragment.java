@@ -2,11 +2,14 @@ package com.example.ingredientsmeal.menuFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,8 @@ import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.menu.MenuFragment;
+import com.example.ingredientsmeal.menuFragments.adapters.DinnerRecyclerViewAdapter;
+import com.example.ingredientsmeal.menuFragments.adapters.TypeRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,17 +38,22 @@ import java.util.Map;
 
 public class TypeOfDinnerFragment extends Fragment implements View.OnClickListener {
 
-    private ListView typeOfDinnerListView;
-    private ArrayList<String> typeOfDinnerArrayList = new ArrayList<>();
-    private ArrayAdapter<String> typeOfDinnerArrayAdapter;
+    public ArrayList<String> typeValueArrayList = new ArrayList<>();
+    private RecyclerView typeRecyclerView;
 
-    private String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner;
-
+    private static String FirebaseFirstStepDinner, FirebaseFirstSecondDinner;
 
     public TypeOfDinnerFragment() {
         // Required empty public constructor
     }
 
+    public static String getFirebaseFirstStepDinner() {
+        return FirebaseFirstStepDinner;
+    }
+
+    public static String getFirebaseFirstSecondDinner() {
+        return FirebaseFirstSecondDinner;
+    }
 
     public static TypeOfDinnerFragment newInstance(String param1, String param2) {
         TypeOfDinnerFragment fragment = new TypeOfDinnerFragment();
@@ -66,6 +76,8 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_of_dinner, container, false);
 
+        typeRecyclerView = (RecyclerView) rootView.findViewById(R.id.typeRecyclerView);
+
         FirebaseFirstStepDinner = getArguments().getString("FirebaseFirstStepDinner");
         FirebaseFirstSecondDinner = getArguments().getString("FirebaseFirstSecondDinner");
 
@@ -77,12 +89,6 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
         TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
         toolbarTitleTextView.setText(FirebaseFirstSecondDinner.toString());
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        typeOfDinnerArrayList.clear();
-        typeOfDinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, typeOfDinnerArrayList);
-
-        typeOfDinnerListView = (ListView) rootView.findViewById(R.id.typeOfDinnerListView);
-        typeOfDinnerListView.setAdapter(typeOfDinnerArrayAdapter);
 
         displayCategoryDinnerList();//wywołanie metody wyswietlajace liste typów dań z wybranej kategori posiłkowych
 
@@ -98,6 +104,9 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
     }
 
     private void displayCategoryDinnerList() {
+
+        typeValueArrayList.clear();
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner).child(FirebaseFirstSecondDinner);
 
@@ -105,32 +114,24 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String key2 = childSnapshot.getKey();
+                    String key = childSnapshot.getKey();
+                    typeValueArrayList.add(key);
 
-                    typeOfDinnerArrayList.add(key2);
-                    typeOfDinnerArrayAdapter.notifyDataSetChanged();
+                    TypeRecyclerViewAdapter adapter = new TypeRecyclerViewAdapter(typeValueArrayList);
 
-                    typeOfDinnerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Bundle data = new Bundle();
+                    typeRecyclerView.setHasFixedSize(true);
+                    typeRecyclerView.setAdapter(adapter);
 
-                            data.putString("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
-                            data.putString("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
-                            data.putString("FirebaseFirstthirdDinner", typeOfDinnerArrayList.get(position));
-
-                            Fragment fragment = new DishFragment();
-                            fragment.setArguments(data);
-                            loadFragment(fragment);
-                        }
-                    });
+                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    typeRecyclerView.setLayoutManager(llm);
 
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                typeOfDinnerArrayAdapter.notifyDataSetChanged();
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         };
         hotelRef.addListenerForSingleValueEvent(eventListener);

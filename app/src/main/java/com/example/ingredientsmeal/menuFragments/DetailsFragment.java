@@ -92,8 +92,12 @@ public class DetailsFragment extends Fragment {
                     }
                 }).attach();
 
+        setHasOptionsMenu(true);
+
         return rootView;
     }
+
+
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {

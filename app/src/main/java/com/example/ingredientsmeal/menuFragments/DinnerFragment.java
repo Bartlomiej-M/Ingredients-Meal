@@ -3,33 +3,23 @@ package com.example.ingredientsmeal.menuFragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.menu.MainMenu;
-import com.example.ingredientsmeal.menu.MenuFragment;
-import com.example.ingredientsmeal.startFragments.ForgotPasswordFragment;
-import com.example.ingredientsmeal.startFragments.WelcomeFragment;
+import com.example.ingredientsmeal.menuFragments.adapters.DinnerRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,17 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DinnerFragment extends Fragment implements View.OnClickListener {
 
-    private ListView categoryDinnerList;
-    private ArrayList<String> categoryArrayList = new ArrayList<>();
-    private ArrayAdapter<String> categoryArrayAdapter;
-
-    public  MainMenu mainMenu = new MainMenu();
-    private String FirebaseFirstStepDinner;
-    private android.app.Fragment ActionBarActivity;
+    public ArrayList<String> dinnerValueArrayList = new ArrayList<>();
+    private RecyclerView dinnerRecyclerView;
+    private static String FirebaseFirstStepDinner = "Dinner";
 
     public DinnerFragment() {
         // Required empty public constructor
@@ -60,6 +45,8 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
         fragment.setArguments(args);
         return fragment;
     }
+
+    public static String getFirebaseFirstStepDinner() { return FirebaseFirstStepDinner; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,21 +62,18 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
 
+        dinnerRecyclerView = (RecyclerView) rootView.findViewById(R.id.dinnerRecyclerView);
+
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
-        toolbarTitleTextView.setText("Dania");
+        toolbarTitleTextView.setText("Rodzaj");
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        categoryArrayList.clear();
-        categoryArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row_list, categoryArrayList);
-        categoryDinnerList = (ListView) rootView.findViewById(R.id.categoryDinnerList);
-        categoryDinnerList.setAdapter(categoryArrayAdapter);
-
-        displayCategoryDinnerList();//wywołanie metody wyswietlajacej liste kategori posiłkowych
+        displayCategoryDinnerList();
 
         return rootView;
     }
@@ -116,9 +100,7 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
 
     private void displayCategoryDinnerList() {
 
-        categoryArrayList.clear();
-
-        FirebaseFirstStepDinner = "Dinner";
+        dinnerValueArrayList.clear();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelRef = rootRef.child(FirebaseFirstStepDinner);
@@ -129,28 +111,22 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
 
                     String key = childSnapshot.getKey();
-                    categoryArrayList.add(key);
-                    categoryArrayAdapter.notifyDataSetChanged();
+                    dinnerValueArrayList.add(key);
+
+                    DinnerRecyclerViewAdapter adapter = new DinnerRecyclerViewAdapter(dinnerValueArrayList);
+
+                    dinnerRecyclerView.setHasFixedSize(true);
+                    dinnerRecyclerView.setAdapter(adapter);
+
+                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    dinnerRecyclerView.setLayoutManager(llm);
                 }
-
-                categoryDinnerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Bundle data = new Bundle();
-                        data.putString("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
-                        data.putString("FirebaseFirstSecondDinner", categoryArrayList.get(position));
-
-                        Fragment fragment = new TypeOfDinnerFragment();
-                        fragment.setArguments(data);
-                        loadFragment(fragment);
-                    }
-                });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                categoryArrayAdapter.notifyDataSetChanged();
+
             }
         };
         hotelRef.addListenerForSingleValueEvent(eventListener);
