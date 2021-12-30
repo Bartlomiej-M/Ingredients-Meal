@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -141,38 +145,59 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
             return;
         }
 
-        final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
-        customLoadingDialog.startLoadingDialog();
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(login).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    UserModel userModel = new UserModel(login, email, number);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    LoginInputTextReg.setError("Podany login jest już zajęty.");
+                    LoginInputTextReg.requestFocus();
+                } else {
+                    final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
+                    customLoadingDialog.startLoadingDialog();
 
-                    FirebaseDatabase.getInstance().getReference("Users")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                        public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                customLoadingDialog.dismissDialog();
-                                new CustomToastDialog(getContext(), R.string.msg_toast_succ_reg, R.id.custom_toast_message, R.layout.toast_success).show();
-                                Fragment fragment = null;
-                                fragment = new LoginFragment();
-                                loadFragment(fragment);
+                                UserModel userModel = new UserModel(login, email, number);
+
+
+                                FirebaseDatabase.getInstance().getReference("Users")
+                                        .child(login)
+                                        .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            customLoadingDialog.dismissDialog();
+                                            new CustomToastDialog(getContext(), R.string.msg_toast_succ_reg, R.id.custom_toast_message, R.layout.toast_success).show();
+                                            Fragment fragment = null;
+                                            fragment = new LoginFragment();
+                                            loadFragment(fragment);
+                                        } else {
+                                            customLoadingDialog.dismissDialog();
+                                            new CustomToastDialog(getContext(), R.string.msg_toast_error_again, R.id.custom_toast_message, R.layout.toast_warning).show();
+                                        }
+                                    }
+                                });
                             } else {
                                 customLoadingDialog.dismissDialog();
-                                new CustomToastDialog(getContext(), R.string.msg_toast_error_again, R.id.custom_toast_message, R.layout.toast_warning).show();
+                                new CustomToastDialog(getContext(), R.string.msg_toast_error_reg, R.id.custom_toast_message, R.layout.toast_warning).show();
                             }
                         }
                     });
-                } else {
-                    customLoadingDialog.dismissDialog();
-                    new CustomToastDialog(getContext(), R.string.msg_toast_error_reg, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
         });
+
+
     }
 
     private static boolean isValidPassword(String password) {

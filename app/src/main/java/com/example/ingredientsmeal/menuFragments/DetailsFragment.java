@@ -10,16 +10,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
-import com.example.ingredientsmeal.menuFragments.viewpages.IngredientsFragment;
+import com.example.ingredientsmeal.menuFragments.viewpages.IngredientFragment;
 import com.example.ingredientsmeal.menuFragments.viewpages.RecipeFragment;
 import com.example.ingredientsmeal.menuFragments.viewpages.ViewDetailsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -81,8 +79,8 @@ public class DetailsFragment extends Fragment {
 
                         if (position == 0) {
                             tab.setText("Składniki");
-                            IngredientsFragment ingredientsFragment = new IngredientsFragment();
-                            ingredientsFragment.setArguments(arguments);
+                            IngredientFragment ingredientFragment = new IngredientFragment();
+                            ingredientFragment.setArguments(arguments);
 
                         } else {
                             tab.setText("Przygotowanie");
@@ -103,7 +101,7 @@ public class DetailsFragment extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.nav_search).setVisible(false);
-        menu.findItem(R.id.nav_settings).setVisible(true);
+        menu.findItem(R.id.my_Messages).setVisible(true);
     }
 
     public void loadFragment(Fragment fragment) {

@@ -8,7 +8,7 @@
         android:visible="true"
         android:icon="@drawable/ic_baseline_search_24"/>
 
-    <item android:id="@+id/nav_settings"
+    <item android:id="@+id/my_Messages"
         android:title="Powiadomienia"
         app:showAsAction="ifRoom"
         android:visible="true"

@@ -1,17 +1,23 @@
 package com.example.ingredientsmeal.menuFragments.viewpages;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomShareIngredientsDialog;
 import com.example.ingredientsmeal.menuFragments.adapters.IngredientsRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class IngredientsFragment extends Fragment implements View.OnClickListener {
+public class IngredientFragment extends Fragment implements View.OnClickListener {
 
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner, FirebaseFirstfourthDinner;
     private Button btnSendIngredients;
@@ -29,13 +35,14 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
     public ArrayList<String> ingredientsArrayList = new ArrayList<>();
     public ArrayList<String> ingredientskeyArrayList = new ArrayList<>();
     private RecyclerView ingredientsRecyclerView;
+    public IngredientsRecyclerViewAdapter adapter;
 
-    public IngredientsFragment() {
+    public IngredientFragment() {
         // Required empty public constructor
     }
 
-    public static IngredientsFragment newInstance(int param1, String param2) {
-        IngredientsFragment fragment = new IngredientsFragment();
+    public static IngredientFragment newInstance(int param1, String param2) {
+        IngredientFragment fragment = new IngredientFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -89,7 +96,7 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
                     ingredientskeyArrayList.add(key);
                     ingredientsArrayList.add(value);
 
-                    IngredientsRecyclerViewAdapter adapter = new IngredientsRecyclerViewAdapter(ingredientskeyArrayList, ingredientsArrayList);
+                    adapter = new IngredientsRecyclerViewAdapter(ingredientskeyArrayList, ingredientsArrayList);
                     ingredientsRecyclerView.setHasFixedSize(true);
                     ingredientsRecyclerView.setAdapter(adapter);
 
@@ -116,15 +123,35 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
         fragmentTransaction.addToBackStack(null);
     }
 
+    public void getData(){
+        ingredientsArrayList = (ArrayList<String>) adapter.listofselectedactivites();
+    }
+
     @Override
     public void onClick(View v) {
         Fragment fragment = null;
 
         switch (v.getId()) {
             case R.id.btnSendIngredients:
-                Toast.makeText(getContext(), "Przycisk wysyłania składników", Toast.LENGTH_LONG).show();
+                getData();
+                if(ingredientsArrayList == null || ingredientsArrayList.isEmpty()){
+                    Toast.makeText(getContext(), "Nie wybrałeś żadnych składników", Toast.LENGTH_LONG).show();
+                }else{
+                    infoAboutShare(ingredientsArrayList);
+                }
+
                 break;
 
         }
+    }
+
+    public void infoAboutShare(ArrayList<String> ingredientsArrayList) {
+        CustomShareIngredientsDialog customShareIngredientsDialog =
+                new CustomShareIngredientsDialog(getActivity(), R.string.msg_question_logout, ingredientsArrayList);
+
+        customShareIngredientsDialog.getWindow().
+                setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        customShareIngredientsDialog.show();
     }
 }

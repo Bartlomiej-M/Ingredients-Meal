@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,8 +64,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             case R.id.nav_search:
                 Toast.makeText(this, "Click open WYSZUKAJ", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.nav_settings:
-                Toast.makeText(this, "Click open SETTINGS", Toast.LENGTH_LONG).show();
+            case R.id.my_Messages:
+                fragment = new MyMessagesFragment();
+                loadFragment(fragment);
                 break;
         }
         return super.onOptionsItemSelected(item);

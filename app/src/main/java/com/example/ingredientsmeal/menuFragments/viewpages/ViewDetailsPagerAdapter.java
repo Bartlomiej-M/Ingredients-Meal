@@ -27,7 +27,7 @@ public class ViewDetailsPagerAdapter extends FragmentStateAdapter implements Ser
     public Fragment createFragment(int position) {
 
         if (position == 0) {
-            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            IngredientFragment ingredientsFragment = new IngredientFragment();
             ingredientsFragment.setArguments(arguments);
             return ingredientsFragment;
 
