@@ -3,6 +3,8 @@ package com.example.ingredientsmeal.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,14 +24,14 @@ import java.util.ArrayList;
 public class CustomShareIngredientsDialog extends Dialog implements
         android.view.View.OnClickListener {
 
-    public Activity c;
+    public Activity activity;
     public Button btnSendInApp, btnSendOtherApp;
-    public ArrayList <String> ingredientsArrayList;
+    public ArrayList<String> ingredientsArrayList;
     int message;
 
-    public CustomShareIngredientsDialog(@NonNull Activity a, int message, ArrayList<String> ingredientsArrayList) {
-        super(a);
-        this.c = a;
+    public CustomShareIngredientsDialog(@NonNull Activity activity, int message, ArrayList<String> ingredientsArrayList) {
+        super(activity);
+        this.activity = activity;
         this.message = message;
         this.ingredientsArrayList = ingredientsArrayList;
     }
@@ -51,26 +53,31 @@ public class CustomShareIngredientsDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSendInApp:
-
                 dismiss();
+                sendIngredients(ingredientsArrayList);
                 break;
             case R.id.btnSendOtherApp:
-                Log.d("CUSTOM2: ", String.valueOf(ingredientsArrayList.toArray()));
-                Log.d("CUSTOM4: ", ingredientsArrayList.toString());
-
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_TEXT, ingredientsArrayList.toString());
                 intent.setType("text/plain");
 
-                if(intent.resolveActivity(c.getPackageManager()) != null){
+                if (intent.resolveActivity(activity.getPackageManager()) != null) {
                     getContext().startActivity(intent);
                 }
                 dismiss();
                 break;
-            default:
-                break;
         }
         dismiss();
+    }
+
+    public void sendIngredients(ArrayList<String> ingredientsArrayList) {
+        CustomSendIngredientsDialog customSendIngredientsDialog =
+                new CustomSendIngredientsDialog(activity, R.string.msg_question_logout, ingredientsArrayList);
+
+        customSendIngredientsDialog.getWindow().
+                setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        customSendIngredientsDialog.show();
     }
 }

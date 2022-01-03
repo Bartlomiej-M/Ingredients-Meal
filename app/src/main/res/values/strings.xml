@@ -11,6 +11,8 @@
     <string name="msg_toast_error_forget">Operacja nie powiodła się sprawdzi wprowadzone dane i połączenie z internetem</string>
     <string name="msg_toast_succ_forget">Sprawdzi swojego maila w celu zresetowania hasła</string>
     <string name="msg_toast_succ_reg">Pomyślnie zarejestrowano użytkownika</string>
+    <string name="msg_toast_err_message">Wiadomości nie została wysłana</string>
+    <string name="msg_toast_succ_message">Wiadomości została wysłana</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="msg_question_logout">Czy napewno chcesz się wylogować ?</string>

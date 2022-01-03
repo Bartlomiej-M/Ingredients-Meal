@@ -162,8 +162,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                UserModel userModel = new UserModel(login, email, number);
 
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                UserModel userModel = new UserModel(login, email, number, uid);
 
                                 FirebaseDatabase.getInstance().getReference("Users")
                                         .child(login)

@@ -51,6 +51,7 @@ public class MyMessagesFragment extends Fragment {
         TextView toolbarTitleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitleTextView);
         toolbarTitleTextView.setText("Moje wiadomości");
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setHasOptionsMenu(true);
 
         return rootView;
     }

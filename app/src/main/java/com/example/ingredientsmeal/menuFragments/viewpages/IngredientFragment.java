@@ -139,9 +139,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 }else{
                     infoAboutShare(ingredientsArrayList);
                 }
-
                 break;
-
         }
     }
 
