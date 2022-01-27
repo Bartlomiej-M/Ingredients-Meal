@@ -8,7 +8,8 @@ public class DishModel {
 
     }
 
-    public DishModel(String Poziom, String Zdjecie, String CzasTrwania, String EnergiaWporcji, String Porcja) {
+    public DishModel(String Poziom, String Zdjecie, String CzasTrwania, String EnergiaWporcji,
+                     String Porcja) {
         this.Poziom = Poziom;
         this.Zdjecie = Zdjecie;
         this.CzasTrwania = CzasTrwania;

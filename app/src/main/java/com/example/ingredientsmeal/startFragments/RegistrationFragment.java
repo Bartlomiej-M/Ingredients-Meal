@@ -137,15 +137,13 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
             PasswordInputTextReg.setError("Hasło nie spełnia wymagań.");
             PasswordInputTextReg.requestFocus();
             return;
-        }//Password second validation check
+        }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             EmailInputTextReg.setError("E-Mail jest niepoprawny.");
             EmailInputTextReg.requestFocus();
             return;
         }
-
-
 
         FirebaseDatabase.getInstance().getReference("Users")
                 .child(login).addListenerForSingleValueEvent(new ValueEventListener() {

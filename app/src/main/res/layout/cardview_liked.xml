@@ -6,7 +6,7 @@
     android:layout_margin="5dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewDish"
+        android:id="@+id/cardViewLiked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -17,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#B2FF59">
+            android:background="#ECAF47">
 
             <ImageView
                 android:id="@+id/rImageView"
@@ -32,7 +32,7 @@
             </ImageView>
 
             <ImageButton
-                android:id="@+id/ibtn_addLiked"
+                android:id="@+id/ibtn_delLiked"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentTop="true"
@@ -42,7 +42,7 @@
                 android:background="@android:color/transparent"
                 android:onClick="onClick"
                 android:outlineAmbientShadowColor="@color/black"
-                android:src="@drawable/ic_liked_add"
+                android:src="@drawable/ic_del_liked"
                 android:tag="R.drawable.ic_like_add"
                 android:visibility="visible" />
 

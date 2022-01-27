@@ -67,6 +67,7 @@ public class CustomSendIngredientsDialog extends Dialog implements
     }
 
     public String getConsignorName() {
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         Query query = rootRef.child("Users").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -95,7 +96,6 @@ public class CustomSendIngredientsDialog extends Dialog implements
         Date currentTime = Calendar.getInstance().getTime();
         String data = String.valueOf(currentTime);
 
-        Log.d("No to zobaczmy", recipient + " " + contents + " " + consignor + " " + data);
 
         SendMessageModel sendMessageModel = new SendMessageModel(consignor, contents);
 

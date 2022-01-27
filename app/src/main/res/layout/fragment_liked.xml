@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".menu.MyMessagesFragment">
+    tools:context=".menuFragments.LikedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/recyclerViewMessagesNONE"
+        android:id="@+id/recyclerViewLikedNONE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/messagesInfoEmptyLL"
+            android:id="@+id/likedInfoEmptyLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -28,35 +28,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_baseline_message_136" />
+                android:src="@drawable/ic_baseline_soup_kitchen_136" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Nie masz żadnych wiadomości"
-                android:textColor="@color/white"/>
+                android:text="Nie masz jeszcze żadnych polubionych potraw"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/recyclerViewMessagesFULL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/messagesRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/recviewLiked"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:paddingBottom="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

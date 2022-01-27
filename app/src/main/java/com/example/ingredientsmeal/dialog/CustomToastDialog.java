@@ -11,7 +11,8 @@ public class CustomToastDialog extends Toast {
     public Context context;
     public int message, toastCustom;
 
-    public CustomToastDialog(Context context, int message, int txt_message, int toastCustom) {
+    public CustomToastDialog(Context context, int message, int txt_message,
+                             int toastCustom) {
         super(context);
         this.context = context;
         this.message = message;

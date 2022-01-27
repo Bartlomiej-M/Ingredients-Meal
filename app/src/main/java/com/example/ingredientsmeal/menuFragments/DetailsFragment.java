@@ -60,9 +60,11 @@ public class DetailsFragment extends Fragment {
         toolbarTitleTextView.setText(FirebaseFirstfourthDinner);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //inicjalizacja tabLayout i ViewPage2
         TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
         viewPager2 = rootView.findViewById(R.id.view_pager);
 
+        //inicjalizacja mapy umożliwiającej wysłanie argumentów do innych fragmentów
         Bundle arguments = new Bundle();
         arguments.putSerializable("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
         arguments.putSerializable("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
@@ -77,12 +79,12 @@ public class DetailsFragment extends Fragment {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
 
-                        if (position == 0) {
+                        if (position == 0) {//wyswietlenie fragmentu dla pozycji 0
                             tab.setText("Składniki");
                             IngredientFragment ingredientFragment = new IngredientFragment();
                             ingredientFragment.setArguments(arguments);
 
-                        } else {
+                        } else {//wyswietlenie fragmentu dla pozyjci 1
                             tab.setText("Przygotowanie");
                             RecipeFragment recipeFragment = new RecipeFragment();
                             recipeFragment.setArguments(arguments);

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -12,19 +13,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
-
+import com.example.ingredientsmeal.menuFragments.LikedFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
@@ -32,23 +42,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private CardView card_btn_dinner, card_btn_history, card_btn_receipt,
             card_btn_addMeal, card_btn_settings, card_btn_logout;
 
+    public String userOnline;
+
     private Fragment fragment = null;
 
     private float v = 0;
 
     final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
-
-    public MenuFragment() {
-
-    }
-
-    public static MenuFragment newInstance(String param1, String param2) {
-        MenuFragment fragment = new MenuFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,14 +74,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         toolbarTitleTextView.setText("Menu Główne");
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         card_btn_dinner = (CardView) rootView.findViewById(R.id.card_btn_dinner);
         card_btn_dinner.setOnClickListener(this);
 
         card_btn_history = (CardView) rootView.findViewById(R.id.card_btn_history);
         card_btn_history.setOnClickListener(this);
 
-        card_btn_receipt = (CardView) rootView.findViewById(R.id.card_btn_receipt);
+        card_btn_receipt = (CardView) rootView.findViewById(R.id.card_btn_liked);
         card_btn_receipt.setOnClickListener(this);
 
         card_btn_addMeal = (CardView) rootView.findViewById(R.id.card_btn_addMeal);
@@ -96,6 +95,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
 
         SetComponentsInLayout();
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        Query query = rootRef.child("Users").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    userOnline = ds.getKey();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(),
+                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
+            }
+        };
+
+        query.addListenerForSingleValueEvent(valueEventListener);
 
         return rootView;
     }
@@ -113,6 +132,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         menu.findItem(R.id.my_Messages).setVisible(true);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -123,8 +143,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             case R.id.card_btn_history:
 
                 break;
-            case R.id.card_btn_receipt:
-
+            case R.id.card_btn_liked:
+                fragment = new LikedFragment(userOnline);
+                loadFragment(fragment);
                 break;
             case R.id.card_btn_addMeal:
 
@@ -174,4 +195,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         card_btn_settings.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(600).start();
         card_btn_logout.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(600).start();
     }
+
+/*    public String getConsignorName() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        Query query = rootRef.child("Users").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    userOnline = ds.getKey();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(),
+                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
+            }
+        };
+        query.addListenerForSingleValueEvent(valueEventListener);
+        return userOnline;
+    }*/
 }

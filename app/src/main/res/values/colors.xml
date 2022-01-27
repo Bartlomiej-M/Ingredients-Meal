@@ -10,4 +10,12 @@
     <color name="mtrl_textinput_default_box_stroke_color">#FFFFFFFF</color>
     <color name="button_green">#749835</color>
     <color name="button_red">#950100</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorIcons">#FFFFFF</color>
+    <color name="colorDivider">#BDBDBD</color>
+    <color name="black_effective">#2a2a2a</color>
 </resources>
