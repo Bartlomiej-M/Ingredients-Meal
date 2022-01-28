@@ -27,6 +27,7 @@ import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
+import com.example.ingredientsmeal.menuFragments.HistoryFragment;
 import com.example.ingredientsmeal.menuFragments.LikedFragment;
 import com.example.ingredientsmeal.menuFragments.SettingsFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -142,7 +143,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 loadFragment(fragment);
                 break;
             case R.id.card_btn_history:
-
+                fragment = new HistoryFragment(userOnline);
+                loadFragment(fragment);
                 break;
             case R.id.card_btn_liked:
                 fragment = new LikedFragment(userOnline);

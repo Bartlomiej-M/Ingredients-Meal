@@ -40,13 +40,7 @@ import java.util.regex.Pattern;
 public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     public String userOnline;
-
-
-
     public String emailUser;
-
-
-
 
     private TextView username, email, number;
     private Button changePasswordText;
@@ -88,19 +82,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         changePasswordText.setOnClickListener(this);
 
         frameSettings = rootView.findViewById(R.id.frameSettings);
-
+        Log.d("TAG", String.valueOf(userOnline));
+        Log.d("TAG", String.valueOf(email));
+        Log.d("TAG", String.valueOf(emailUser));
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db  = database.getReference().child("Users").child(userOnline).child("Settings");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             public void onDataChange(DataSnapshot data) {
                 email.setText(data.child("email").getValue(String.class));
 
                 setEmailUser(email.getText().toString().trim());
-
+                Log.d("TAG", String.valueOf(email));
+                Log.d("TAG", String.valueOf(emailUser));
                 username.setText(data.child("login").getValue(String.class));
+
                 if(data.child("number").getValue(String.class) == null
                         || data.child("number").getValue(String.class) == ""
                         || data.child("number").getValue(String.class).isEmpty()){
+
                     number.setText(data.child("number").getValue(String.class));
                 }else{
                     number.setText("Brak numeru telefonu");

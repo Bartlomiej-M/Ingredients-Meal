@@ -25,6 +25,8 @@
             android:id="@+id/btnSendIngredients"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/btn_basic_custom_green"
             android:foreground="?attr/selectableItemBackground"
             android:text="Udostępnij wybrane składniki"
