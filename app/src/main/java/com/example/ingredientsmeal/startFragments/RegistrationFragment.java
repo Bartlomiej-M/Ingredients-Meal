@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -162,19 +164,36 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                             if (task.isSuccessful()) {
 
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                UserModel userModel = new UserModel(login, email, number, uid);
+
+                                Map<String, Object> uidd = new HashMap<String,Object>();
+
+                                uidd.put("uid", uid);
 
                                 FirebaseDatabase.getInstance().getReference("Users")
                                         .child(login)
-                                        .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .setValue(uidd).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            customLoadingDialog.dismissDialog();
-                                            new CustomToastDialog(getContext(), R.string.msg_toast_succ_reg, R.id.custom_toast_message, R.layout.toast_success).show();
-                                            Fragment fragment = null;
-                                            fragment = new LoginFragment();
-                                            loadFragment(fragment);
+                                            UserModel userModel = new UserModel(login, email, number);
+                                            FirebaseDatabase.getInstance().getReference("Users")
+                                                    .child(login).child("Settings")
+                                                    .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        customLoadingDialog.dismissDialog();
+                                                        new CustomToastDialog(getContext(), R.string.msg_toast_succ_reg, R.id.custom_toast_message, R.layout.toast_success).show();
+                                                        Fragment fragment = null;
+                                                        fragment = new LoginFragment();
+                                                        loadFragment(fragment);
+                                                    } else {
+                                                        customLoadingDialog.dismissDialog();
+                                                        new CustomToastDialog(getContext(), R.string.msg_toast_error_again, R.id.custom_toast_message, R.layout.toast_warning).show();
+                                                    }
+                                                }
+                                            });
+
                                         } else {
                                             customLoadingDialog.dismissDialog();
                                             new CustomToastDialog(getContext(), R.string.msg_toast_error_again, R.id.custom_toast_message, R.layout.toast_warning).show();
@@ -195,8 +214,6 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                 throw databaseError.toException();
             }
         });
-
-
     }
 
     private static boolean isValidPassword(String password) {

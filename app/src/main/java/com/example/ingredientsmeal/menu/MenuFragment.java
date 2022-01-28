@@ -28,6 +28,7 @@ import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
 import com.example.ingredientsmeal.menuFragments.LikedFragment;
+import com.example.ingredientsmeal.menuFragments.SettingsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -151,7 +152,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.card_btn_settings:
-
+                fragment = new SettingsFragment(userOnline);
+                loadFragment(fragment);
                 break;
             case R.id.card_btn_logout:
                 signOut();

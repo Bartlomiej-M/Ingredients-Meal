@@ -40,12 +40,9 @@ public class LikedFragment extends Fragment implements View.OnClickListener, Lik
     private static String FirebaseThirdStepUsers;
     public ConstraintLayout constraintEmptyLayout;
 
-
     public LikedFragment(String userOnline) {
-        // Required empty public constructor
         this.userOnline = userOnline;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
