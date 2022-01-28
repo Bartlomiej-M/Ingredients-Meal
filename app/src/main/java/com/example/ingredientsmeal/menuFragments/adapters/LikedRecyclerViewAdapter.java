@@ -88,12 +88,6 @@ public class LikedRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel,
             @Override
             public void onClick(View itemView) {
 
-                Log.d("str11", String.valueOf(getRef(position).getKey()));
-                Log.d("str12", String.valueOf(getItem(position)));
-                Log.d("str13", String.valueOf(getItemId(position)));
-                Log.d("str14", String.valueOf(getRef(position).getKey().toString()));
-
-
                 FirebaseDatabase.getInstance().getReference()
                         .child("Users")
                         .child(userOnline)

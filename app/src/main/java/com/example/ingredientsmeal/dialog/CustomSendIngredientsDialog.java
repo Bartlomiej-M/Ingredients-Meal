@@ -120,11 +120,6 @@ public class CustomSendIngredientsDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.btnSendInAppAprove:
                 sendMessage();
-/*                clubkey = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                Log.d("SDSDSDDS", clubkey);
-
-
-                Toast.makeText(activity, clubkey, Toast.LENGTH_LONG).show();*/
                 break;
         }
     }

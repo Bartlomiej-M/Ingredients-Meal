@@ -26,6 +26,7 @@ import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
+import com.example.ingredientsmeal.menuFragments.AddMealFragment;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
 import com.example.ingredientsmeal.menuFragments.HistoryFragment;
 import com.example.ingredientsmeal.menuFragments.LikedFragment;
@@ -151,7 +152,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 loadFragment(fragment);
                 break;
             case R.id.card_btn_addMeal:
-
+                fragment = new AddMealFragment(userOnline);
+                loadFragment(fragment);
                 break;
             case R.id.card_btn_settings:
                 fragment = new SettingsFragment(userOnline);

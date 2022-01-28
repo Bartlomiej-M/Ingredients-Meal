@@ -19,6 +19,8 @@
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_error_toast.xml" value="0.3828125" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_like_add.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_login_person.xml" value="0.17604166666666668" />
+        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_menu_calendar_50.xml" value="0.175" />
+        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_menu_settings_50.xml" value="0.175" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/ic_menubackground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/drawable/shape.xml" value="0.175" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/activity_main.xml" value="0.28306159420289856" />
@@ -37,6 +39,7 @@
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/custom_dialog.xml" value="0.3625" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/dialog_send_message.xml" value="0.25" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/dialog_share.xml" value="0.33" />
+        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_add_meal.xml" value="0.15885416666666666" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_change_password.xml" value="0.2" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_details.xml" value="0.22" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_dinner.xml" value="0.2" />
@@ -49,9 +52,9 @@
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_my_messages.xml" value="0.2" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_recipe.xml" value="0.22" />
-        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_registration.xml" value="0.25" />
+        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_registration.xml" value="0.2" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_setting_option_list.xml" value="0.22" />
-        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_settings.xml" value="0.33" />
+        <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_settings.xml" value="0.18" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_type_of_dinner.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/fragment_welcome.xml" value="0.16" />
         <entry key="..\:/Users/fs908/Desktop/Ingredients &amp; Meal/app/src/main/res/layout/row_list.xml" value="0.2" />

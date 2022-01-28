@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ingredients&amp;Meal</string>
 
-    <string name="title_aplication">Shopping&amp;Eating</string>
+    <string name="title_aplication">Ingredients&amp;Meal</string>
     <string name="login_button">Zaloguj się</string>\
     <string name="registration_button">Zarejestuj się</string>
 
@@ -16,6 +16,10 @@
 
     <string name="msg_toast_err_history">Błąd sieci, sprawdz dostęp do internetu</string>
     <string name="msg_toast_succ_history">Informacje o przygotowanej potrawie zostały zapisane do historii</string>
+
+    <string name="msg_toast_err_bmi">Błąd sieci, sprawdz dostęp do internetu</string>
+    <string name="msg_toast_succ_bmi">Zaktualizowano status twojego bmi</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="msg_question_logout">Czy napewno chcesz się wylogować ?</string>

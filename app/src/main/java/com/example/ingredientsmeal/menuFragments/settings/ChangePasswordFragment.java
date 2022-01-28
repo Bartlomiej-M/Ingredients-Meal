@@ -156,9 +156,6 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        Log.d("TAG1", emailUser);
-        Log.d("TAG2", oldPasswordInputText);
-
         AuthCredential credential = EmailAuthProvider
                 .getCredential(emailUser, oldPasswordInputText);
 

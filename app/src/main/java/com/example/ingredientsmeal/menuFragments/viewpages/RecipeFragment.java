@@ -165,13 +165,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         userOnline = getUserOnline();
-        //Przykład
-        Log.d("Tag2: ", FirebaseFirstSecondDinner);//Bez glutenu
-        Log.d("Tag3: ", FirebaseFirstthirdDinner);//Mięsne
-        Log.d("Tag4: ", FirebaseFirstfourthDinner);//Kurczak po tajsku
-        Log.d("Tag5: ", currentDate.toString());//28-01-2022
-        Log.d("Tag6: ", currentTime.toString());//12:33:40
-        Log.d("Tag7", String.valueOf(userOnline));//bartek1
 
         historyTypeMeal = FirebaseFirstSecondDinner.toString();
         historyPreferenceMeal = FirebaseFirstthirdDinner.toString();

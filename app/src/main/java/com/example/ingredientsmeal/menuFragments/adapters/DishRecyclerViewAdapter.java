@@ -84,8 +84,6 @@ public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, 
             @Override
             public void onClick(View itemView) {
 
-                Log.d("str2", String.valueOf(userOnline));
-
                 holder.ibtn_addLiked.setVisibility(View.GONE);
                 DatabaseReference fromPath = FirebaseDatabase.getInstance()
                         .getReference()

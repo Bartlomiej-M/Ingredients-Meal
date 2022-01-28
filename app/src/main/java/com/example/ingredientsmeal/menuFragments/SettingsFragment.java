@@ -18,18 +18,27 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.settings.ChangePasswordFragment;
+import com.example.ingredientsmeal.models.HistoryModel;
+import com.example.ingredientsmeal.models.SettingModel;
 import com.example.ingredientsmeal.models.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseError;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,6 +56,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     private FrameLayout frameSettings;
 
     private UserModel userModel;
+
+    //BMP MODULE
+    private TextView userHightTextView, userWeightTextView, bmiTextView;
+
+    private EditText activity_main_heightcm, activity_main_weightkgs; // edit text odpowiadajacy za wczytanie wagi i wzrostu uzytkownika
+
+    private Button btnBMTSend;// przycisk do wysyłania tego do bazy danych
+    private static final int CENTIMETERS_IN_METER = 100;
 
     public SettingsFragment(String userOnline) {
         this.userOnline = userOnline;
@@ -82,19 +99,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         changePasswordText.setOnClickListener(this);
 
         frameSettings = rootView.findViewById(R.id.frameSettings);
-        Log.d("TAG", String.valueOf(userOnline));
-        Log.d("TAG", String.valueOf(email));
-        Log.d("TAG", String.valueOf(emailUser));
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db  = database.getReference().child("Users").child(userOnline).child("Settings");
+
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             public void onDataChange(DataSnapshot data) {
                 email.setText(data.child("email").getValue(String.class));
 
                 setEmailUser(email.getText().toString().trim());
-                Log.d("TAG", String.valueOf(email));
-                Log.d("TAG", String.valueOf(emailUser));
+
                 username.setText(data.child("login").getValue(String.class));
 
                 if(data.child("number").getValue(String.class) == null
@@ -114,7 +129,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
         });
 
+        // Bmi module
+        //textview
+        userHightTextView = rootView.findViewById(R.id.userHightTextView);
+        userWeightTextView = rootView.findViewById(R.id.userWeightTextView);
+        bmiTextView = rootView.findViewById(R.id.bmiTextView);
+        //edittext
+        activity_main_heightcm = rootView.findViewById(R.id.activity_main_heightcm);
+        activity_main_weightkgs = rootView.findViewById(R.id.activity_main_weightkgs);
+        //button
+        btnBMTSend = rootView.findViewById(R.id.btnBMTSend);
+        btnBMTSend.setOnClickListener(this);
 
+        setHasOptionsMenu(true);
+        bmigetBuilder();
         return rootView;
     }
 
@@ -127,13 +155,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.nav_search).setVisible(false);
+        menu.findItem(R.id.my_Messages).setVisible(true);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -146,7 +171,88 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
                 fragment = new ChangePasswordFragment(userOnline, getEmailUser());
                 loadFragment(fragment);
                 break;
+            case R.id.btnBMTSend:
+                if(activity_main_heightcm.getText().toString().trim().isEmpty() || activity_main_weightkgs.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getContext(), "Pola nie mogą być puste", Toast.LENGTH_LONG).show();
+                }else{
+                    bmisetBuilder();
+                }
+                break;
         }
+    }
+    private float  calculateBMI (int weight, int height) {
+        height = height / 100;
+        return (float)  weight / (height*height);
+
+    }
+    public void bmisetBuilder(){
+
+        float heightValue = Float.parseFloat(activity_main_heightcm.getText().toString().trim());
+        float weightValu = Float.parseFloat(activity_main_weightkgs.getText().toString().trim());
+        heightValue = heightValue / 100;
+        float bmp = (weightValu / (heightValue*heightValue));
+
+        SettingModel settingModel = new SettingModel(String.valueOf(heightValue), String.valueOf(weightValu), String.valueOf(bmp));
+
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(userOnline).child("Settings").child("bmi")
+                .setValue(settingModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    new CustomToastDialog(getContext(), R.string.msg_toast_succ_bmi, R.id.custom_toast_message, R.layout.toast_success).show();
+                    bmigetBuilder();
+                } else {
+                    new CustomToastDialog(getContext(), R.string.msg_toast_err_bmi, R.id.custom_toast_message, R.layout.toast_warning).show();
+                }
+            }
+        });
+    };
+
+    public void bmigetBuilder(){
+
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference users = root.child("Users").child(userOnline).child("Settings");
+
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child("bmi").exists()) {
+                    //jezeli folder bmi istnieje bo uzytkownik sprawdzil swoje bmi
+                    bmisetView();
+
+                }else{
+                    userHightTextView.setText("Nie obliczyłeś swojego bmi");
+                    userWeightTextView.setText("Nie obliczyłeś swojego bmi");
+                    bmiTextView.setText("Nie obliczyłeś swojego bmi");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void bmisetView(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference db  = database.getReference().child("Users").child(userOnline).child("Settings").child("bmi");
+
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            public void onDataChange(DataSnapshot data) {
+                userHightTextView.setText(data.child("hightUser").getValue(String.class) + "m");
+                userWeightTextView.setText(data.child("weightUser").getValue(String.class) + "kg");
+                bmiTextView.setText(data.child("bmp").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
     public void loadFragment(Fragment fragment) {

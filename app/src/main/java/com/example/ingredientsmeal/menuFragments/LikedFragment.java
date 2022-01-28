@@ -84,7 +84,7 @@ public class LikedFragment extends Fragment implements View.OnClickListener, Lik
                         .build();
 
         likedRecyclerViewAdapter = new LikedRecyclerViewAdapter(options,  this);
-        Log.d("str333", String.valueOf(likedRecyclerViewAdapter.getItemCount()));
+
         recview.setAdapter(likedRecyclerViewAdapter);
 
         return rootView;
@@ -145,7 +145,7 @@ public class LikedFragment extends Fragment implements View.OnClickListener, Lik
 
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference users = root.child("Users").child(FirebaseSecondStepUsers);
-        Log.d("str2", String.valueOf(FirebaseSecondStepUsers));
+
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

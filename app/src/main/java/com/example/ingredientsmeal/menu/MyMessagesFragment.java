@@ -71,7 +71,6 @@ public class MyMessagesFragment extends Fragment {
         constraintEmptyLayout = rootView.findViewById(R.id.recyclerViewMessagesNONE);
 
         consignor = getArguments().getString("user");
-        Log.d("test log", consignor);
 
         messagesRecyclerView = (RecyclerView) rootView.findViewById(R.id.messagesRecyclerView);
         messagesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
