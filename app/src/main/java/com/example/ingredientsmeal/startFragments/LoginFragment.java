@@ -129,6 +129,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             EmailInputTextLog.requestFocus();
             return;
         }
+
         final CustomLoadingDialog customLoadingDialog = new CustomLoadingDialog(getActivity());
         customLoadingDialog.startLoadingDialog();
 
