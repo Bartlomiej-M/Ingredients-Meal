@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.adapters.DishRecyclerViewAdapter;
 import com.example.ingredientsmeal.menuFragments.adapters.MyMessagesRecyclerViewAdapter;
 import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
@@ -144,7 +145,7 @@ public class MyMessagesFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         });
 

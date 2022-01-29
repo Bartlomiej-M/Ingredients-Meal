@@ -19,6 +19,43 @@
 
     <string name="msg_toast_err_bmi">Błąd sieci, sprawdz dostęp do internetu</string>
     <string name="msg_toast_succ_bmi">Zaktualizowano status twojego bmi</string>
+    <string name="msg_toast_err_status_bmi">Problem z połączeniem, sprawdzi czy jesteś połączony z siecią</string>
+
+    <string name="msg_toast_internet_problem">Sprawdz sobie połączenie z internetem</string>
+
+    <string name="msg_toast_succ_add_liked">Udało się dodać do ulubionych</string>
+    <string name="msg_toast_err_add_liked">Nie udało się dodać do ulubionych</string>
+
+    <string name="msg_toast_succ_del_liked">Usunięto wybrane danie z listy</string>
+    <string name="msg_toast_err_del_liked">Błąd przy usuwaniu z listy, sprawdź połączenie</string>
+
+    <string name="msg_toast_succ_check_ingredient">Wybrane składniki zostały dodane</string>
+    <string name="msg_toast_err_check_ingredient">Nie wybrałeś żadnych składników</string>
+
+    <string name="msg_toast_succ_add_meal">Twoja potrawa została dodana</string>
+    <string name="msg_toast_err_add_meal">Problem z dodaniem składników, sprawdź połączenie z internetem</string>
+    <string name="msg_toast_err_add_meal_plane">Problem z dodaniem planu, sprawdź swoje połączenie z siecią</string>
+
+    <string name="msg_toast_succ_add_meal_all">Rozpocząłeś procedure tworzenie własnej potrawy, postępuj według instrukcji</string>
+
+    <string name="msg_toast_err_empty_records">Pola nie mogą być puste, uzupełnij brakujące pola</string>
+
+    <string name="msg_toast_succ_login">Witaj w aplikacji</string>
+
+    <string name="msg_toast_err_module">Ten moduł jest nieaktywny</string>
+
+    <string name="msg_toast_err_password_rpt">Wprowadzone nowe hasło nie może być takie same jak stare</string>
+    <string name="msg_toast_err_password_double">Hasła nie są takie same</string>
+
+    <string name="msg_toast_succ_password_change">Udało się zmienić hasło</string>
+    <string name="msg_toast_err_password">Nie udało się zmienić hasło</string>
+    <string name="msg_toast_err_password_database">Błąd połączenia z bazą danych</string>
+
+
+
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

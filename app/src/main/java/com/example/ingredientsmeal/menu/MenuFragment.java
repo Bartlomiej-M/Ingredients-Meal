@@ -26,6 +26,7 @@ import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomAlertDialog;
 
 import com.example.ingredientsmeal.dialog.CustomLoadingDialog;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.AddMealFragment;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
 import com.example.ingredientsmeal.menuFragments.HistoryFragment;
@@ -112,8 +113,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),
-                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
 
@@ -202,25 +202,4 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         card_btn_logout.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(600).start();
     }
 
-/*    public String getConsignorName() {
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        Query query = rootRef.child("Users").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    userOnline = ds.getKey();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),
-                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
-            }
-        };
-        query.addListenerForSingleValueEvent(valueEventListener);
-        return userOnline;
-    }*/
 }

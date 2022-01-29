@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="Custom Toast"
             android:padding="5dp"
+            android:layout_margin="8dp"
             android:src="@drawable/ic_error_toast" />
 
         <TextView
@@ -28,6 +29,7 @@
             android:contentDescription="Custom Toast"
             android:padding="5dp"
             android:maxEms="23"
+            android:layout_margin="8dp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp" />

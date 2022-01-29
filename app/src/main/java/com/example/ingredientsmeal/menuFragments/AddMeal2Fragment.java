@@ -86,8 +86,6 @@ public class AddMeal2Fragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_meal2, container, false);
 
-        Log.d("Tag:", String.valueOf(userOnline + meal + duration + portion + level + energy));
-
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -152,7 +150,7 @@ public class AddMeal2Fragment extends Fragment implements View.OnClickListener {
                     openViewIngredients();
                     editTextGetValue.setText("");
                 } else {
-                    Toast.makeText(getContext(), "Problem z dodaniem składników", Toast.LENGTH_LONG).show();
+                    new CustomToastDialog(getContext(), R.string.msg_toast_err_add_meal, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }
         });
@@ -193,7 +191,7 @@ public class AddMeal2Fragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Problem z internetem sprawdzi połączenie", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);

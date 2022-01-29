@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.adapters.LikedRecyclerViewAdapter;
 import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -158,7 +159,7 @@ public class LikedFragment extends Fragment implements View.OnClickListener, Lik
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         });
 

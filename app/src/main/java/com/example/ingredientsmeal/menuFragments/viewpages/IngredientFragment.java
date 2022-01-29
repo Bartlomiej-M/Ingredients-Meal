@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomShareIngredientsDialog;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.adapters.IngredientsRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -109,7 +110,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //"Tu nalezy wstawic komunikat o bledzie albo informacje w freagmencie ze jest null error base"
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);
@@ -135,7 +136,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
             case R.id.btnSendIngredients:
                 getData();
                 if(ingredientsArrayList == null || ingredientsArrayList.isEmpty()){
-                    Toast.makeText(getContext(), "Nie wybrałeś żadnych składników", Toast.LENGTH_LONG).show();
+                    new CustomToastDialog(getContext(), R.string.msg_toast_err_check_ingredient, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }else{
                     infoAboutShare(ingredientsArrayList);
                 }

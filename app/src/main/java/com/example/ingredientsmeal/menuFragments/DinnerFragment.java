@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.adapters.DinnerRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -126,7 +127,7 @@ public class DinnerFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         hotelRef.addListenerForSingleValueEvent(eventListener);

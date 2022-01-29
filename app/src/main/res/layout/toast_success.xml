@@ -17,6 +17,7 @@
             android:id="@+id/custom_toast_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:contentDescription="Custom Toast"
             android:padding="5dp"
             android:src="@drawable/ic_succ_toast" />
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Custom Toast"
+            android:layout_margin="8dp"
             android:padding="5dp"
             android:maxEms="23"
             android:textAlignment="center"

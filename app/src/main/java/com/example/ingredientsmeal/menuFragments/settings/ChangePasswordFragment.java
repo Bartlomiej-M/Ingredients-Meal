@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.DinnerFragment;
 import com.example.ingredientsmeal.menuFragments.SettingsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -149,9 +150,10 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
             return;
         }
         if (oldPasswordInputText == newPasswordPasswordInputText) {
-            Toast.makeText(getContext(), "Wprowadzone nowe hasło nie może być takie same jak stare", Toast.LENGTH_LONG).show();
+            new CustomToastDialog(getContext(), R.string.msg_toast_err_password_rpt, R.id.custom_toast_message, R.layout.toast_warning).show();
+
         } else if (!newPasswordPasswordInputText.equals(repeatNewPasswordInputText)) {
-            Toast.makeText(getContext(), "Hasła nie są takie same", Toast.LENGTH_LONG).show();
+            new CustomToastDialog(getContext(), R.string.msg_toast_err_password_double, R.id.custom_toast_message, R.layout.toast_warning).show();
         } else {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -169,15 +171,14 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Udało się zmienić hasło", Toast.LENGTH_LONG).show();
-
+                                        new CustomToastDialog(getContext(), R.string.msg_toast_succ_password_change, R.id.custom_toast_message, R.layout.toast_warning).show();
                                     } else {
-                                        Toast.makeText(getContext(), "Nie udało się zmienić hasło", Toast.LENGTH_LONG).show();
+                                        new CustomToastDialog(getContext(), R.string.msg_toast_err_password, R.id.custom_toast_message, R.layout.toast_warning).show();
                                     }
                                 }
                             });
                         } else {
-                            Toast.makeText(getContext(), "Błąd połączenia z bazą danych", Toast.LENGTH_LONG).show();
+                            new CustomToastDialog(getContext(), R.string.msg_toast_err_password_database, R.id.custom_toast_message, R.layout.toast_warning).show();
                         }
                     }
                 });

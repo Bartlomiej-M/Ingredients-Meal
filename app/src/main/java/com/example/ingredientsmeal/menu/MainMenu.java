@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.DetailsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +77,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 onBackPressed();
                 break;
             case R.id.nav_search:
-                Toast.makeText(this, "Click open WYSZUKAJ", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getApplicationContext(), R.string.msg_toast_err_module, R.id.custom_toast_message, R.layout.toast_warning).show();
                 break;
             case R.id.my_Messages:
                 fragment = new MyMessagesFragment();
@@ -120,8 +121,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),
-                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getApplicationContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         query.addListenerForSingleValueEvent(valueEventListener);

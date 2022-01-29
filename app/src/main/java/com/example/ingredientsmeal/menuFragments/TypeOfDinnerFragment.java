@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menu.MenuFragment;
 import com.example.ingredientsmeal.menuFragments.adapters.DinnerRecyclerViewAdapter;
 import com.example.ingredientsmeal.menuFragments.adapters.TypeRecyclerViewAdapter;
@@ -131,7 +132,7 @@ public class TypeOfDinnerFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         hotelRef.addListenerForSingleValueEvent(eventListener);

@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingredientsmeal.R;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.DetailsFragment;
 import com.example.ingredientsmeal.menuFragments.LikedFragment;
 import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
@@ -96,10 +97,9 @@ public class LikedRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel,
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d("Delete", "Notification has been deleted");
-
+                            new CustomToastDialog(itemView.getContext(), R.string.msg_toast_succ_del_liked, R.id.custom_toast_message, R.layout.toast_success).show();
                         } else {
-
+                            new CustomToastDialog(itemView.getContext(), R.string.msg_toast_err_del_liked, R.id.custom_toast_message, R.layout.toast_warning).show();
                         }
 
                         if (getItemCount() == 0) {

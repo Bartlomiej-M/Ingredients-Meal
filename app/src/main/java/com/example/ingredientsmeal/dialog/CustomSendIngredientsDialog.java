@@ -81,8 +81,7 @@ public class CustomSendIngredientsDialog extends Dialog implements
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(activity,
-                        "Problem z połączeniem, sprawdzi czy jesteś wciąż zalogowany", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getContext(), R.string.msg_toast_err_status_bmi, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         query.addListenerForSingleValueEvent(valueEventListener);

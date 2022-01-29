@@ -140,6 +140,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     customLoadingDialog.dismissDialog();
                     startActivity(new Intent(getContext(), MainMenu.class));
                     getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_left);
+                    new CustomToastDialog(getActivity(), R.string.msg_toast_succ_login, R.id.custom_toast_message, R.layout.toast_success).show();
                 } else {
                     customLoadingDialog.dismissDialog();
                     new CustomToastDialog(getActivity(), R.string.msg_toast_error_lg, R.id.custom_toast_message, R.layout.toast_warning).show();

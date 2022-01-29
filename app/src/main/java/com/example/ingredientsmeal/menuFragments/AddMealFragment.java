@@ -70,7 +70,6 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
         btnFirstStepAddMeal.setOnClickListener(this);
 
         return rootView;
-
     }
 
     @Override
@@ -110,8 +109,7 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Udało się dodać inicjalizacje potrawy", Toast.LENGTH_LONG).show();
-
+                    new CustomToastDialog(getContext(), R.string.msg_toast_succ_add_meal_all, R.id.custom_toast_message, R.layout.toast_success).show();
                 } else {
                     new CustomToastDialog(getContext(), R.string.msg_toast_err_message, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
@@ -125,6 +123,4 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
         fragmentTransaction.replace(R.id.fragmentMenu, fragment).commit();
         fragmentTransaction.addToBackStack(null);
     }
-
-
 }

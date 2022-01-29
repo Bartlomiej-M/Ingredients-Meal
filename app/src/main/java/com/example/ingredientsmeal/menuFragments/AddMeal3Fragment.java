@@ -75,8 +75,6 @@ public class AddMeal3Fragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_meal3, container, false);
 
-        Log.d("Tag3:", String.valueOf(userOnline + meal + duration + portion + level + energy));
-
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -116,7 +114,7 @@ public class AddMeal3Fragment extends Fragment implements View.OnClickListener {
                 addToPreparation(position);
                 break;
             case R.id.btnLastStepAddMeal:
-                Toast.makeText(getContext(), "Twoja potrawa została dodana", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getContext(), R.string.msg_toast_succ_add_meal, R.id.custom_toast_message, R.layout.toast_success).show();
                 fragment = new MenuFragment();
                 loadFragment(fragment);
                 break;
@@ -142,7 +140,7 @@ public class AddMeal3Fragment extends Fragment implements View.OnClickListener {
                     openViewPreparation();
                     editTextGetValue.setText("");
                 } else {
-                    Toast.makeText(getContext(), "Problem z dodaniem planu", Toast.LENGTH_LONG).show();
+                    new CustomToastDialog(getContext(), R.string.msg_toast_err_add_meal_plane, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }
             }
         });
@@ -183,7 +181,7 @@ public class AddMeal3Fragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Problem z internetem sprawdzi połączenie", Toast.LENGTH_LONG).show();
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         hotelRef2.addListenerForSingleValueEvent(eventListener2);

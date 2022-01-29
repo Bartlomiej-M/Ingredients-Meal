@@ -124,7 +124,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
 
         });
@@ -173,18 +173,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.btnBMTSend:
                 if(activity_main_heightcm.getText().toString().trim().isEmpty() || activity_main_weightkgs.getText().toString().trim().isEmpty()){
-                    Toast.makeText(getContext(), "Pola nie mogą być puste", Toast.LENGTH_LONG).show();
+                    new CustomToastDialog(getContext(), R.string.msg_toast_err_empty_records, R.id.custom_toast_message, R.layout.toast_warning).show();
                 }else{
                     bmisetBuilder();
                 }
                 break;
         }
     }
-    private float  calculateBMI (int weight, int height) {
-        height = height / 100;
-        return (float)  weight / (height*height);
 
-    }
     public void bmisetBuilder(){
 
         float heightValue = Float.parseFloat(activity_main_heightcm.getText().toString().trim());
@@ -230,7 +226,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         });
     }
@@ -249,7 +245,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                new CustomToastDialog(getContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
 
         });

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingredientsmeal.R;
 import com.example.ingredientsmeal.dialog.CustomSendIngredientsDialog;
+import com.example.ingredientsmeal.dialog.CustomToastDialog;
 import com.example.ingredientsmeal.menuFragments.DetailsFragment;
 import com.example.ingredientsmeal.menuFragments.DishFragment;
 import com.example.ingredientsmeal.menuFragments.menuModels.DishModel;
@@ -41,7 +42,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishRecyclerViewAdapter.DishViewHolder>{
+public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, DishRecyclerViewAdapter.DishViewHolder> {
 
     public String FirebaseFirstStepDinner, FirebaseFirstSecondDinner, FirebaseFirstthirdDinner;
     public String userOnline;
@@ -65,17 +66,17 @@ public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, 
             @Override
             public void onClick(View view) {
 
-                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        DetailsFragment detailsFragment = new DetailsFragment();
-                        Bundle data = new Bundle();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                DetailsFragment detailsFragment = new DetailsFragment();
+                Bundle data = new Bundle();
 
-                        data.putString("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
-                        data.putString("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
-                        data.putString("FirebaseFirstthirdDinner", FirebaseFirstthirdDinner);
-                        data.putString("FirebaseFirstfourthDinner", getRef(position).getKey());
+                data.putString("FirebaseFirstStepDinner", FirebaseFirstStepDinner);
+                data.putString("FirebaseFirstSecondDinner", FirebaseFirstSecondDinner);
+                data.putString("FirebaseFirstthirdDinner", FirebaseFirstthirdDinner);
+                data.putString("FirebaseFirstfourthDinner", getRef(position).getKey());
 
-                        detailsFragment.setArguments(data);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentMenu, detailsFragment).addToBackStack(null).commit();
+                detailsFragment.setArguments(data);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentMenu, detailsFragment).addToBackStack(null).commit();
             }
         });
 
@@ -101,14 +102,13 @@ public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, 
                         .child(getRef(position).getKey());
 
                 copyRecord(itemView.getContext(), fromPath, toPath);
-
             }
 
         });
 
     }
 
-    private void copyRecord(Context context, Query fromPath, final DatabaseReference toPath) {
+    private void copyRecord(Context c, Query fromPath, final DatabaseReference toPath) {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -116,16 +116,17 @@ public class DishRecyclerViewAdapter extends FirebaseRecyclerAdapter<DishModel, 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isComplete()) {
-                            Toast.makeText(context, "Udało się dodać do ulubionych", Toast.LENGTH_LONG).show();
+                            new CustomToastDialog(c, R.string.msg_toast_succ_add_liked, R.id.custom_toast_message, R.layout.toast_success).show();
                         } else {
-
-                            Toast.makeText(context, "Nie udało się dodać do ulubionych", Toast.LENGTH_LONG).show();
+                            new CustomToastDialog(c, R.string.msg_toast_err_add_liked, R.id.custom_toast_message, R.layout.toast_warning).show();
                         }
                     }
                 });
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                new CustomToastDialog(c.getApplicationContext(), R.string.msg_toast_internet_problem, R.id.custom_toast_message, R.layout.toast_warning).show();
             }
         };
         fromPath.addListenerForSingleValueEvent(valueEventListener);
