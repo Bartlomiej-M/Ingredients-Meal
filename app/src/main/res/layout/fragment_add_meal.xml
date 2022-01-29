@@ -32,6 +32,7 @@
                 android:text="Witaj w module dodawania własnych dań"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
+
         </LinearLayout>
 
 
@@ -254,22 +255,42 @@
         <LinearLayout
             android:id="@+id/btnLl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGoToAddedMeals"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_basic_custom_red"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="Zobacz dodane potrawy"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:ignore="OnClick" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFirstStepAddMeal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/btn_basic_custom_green"
                 android:foreground="?attr/selectableItemBackground"
                 android:text="Nastepny krok 1/3"
